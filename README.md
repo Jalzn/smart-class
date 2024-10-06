@@ -19,7 +19,7 @@ escolar.
 
 - Jalmir de Jesus Ferreira da Silva Junior - Full Stack Developer
 - João Victor Taufner Pereira - Backend Developer
-- [Nome do Membro 2] - 
+- Diogo do Nascimento Rodrigues - Full Stack Developer
 - [Nome do Membro 3] - 
 
 ## Tecnologias Utilizadas
