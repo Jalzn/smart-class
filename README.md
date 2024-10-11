@@ -82,7 +82,7 @@ escolar.
   - Pesquisa sobre soluções existentes
     
 - Sprint 2: Prototipagem da Interface
-  - Criação de wireframes da interface do usuário
+  - Criação de protótipo (Figma) da interface do usuário
   - Validação do protótipo com usuários finais
   - Ajustes no protótipo baseados no feedback
     
