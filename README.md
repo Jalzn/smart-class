@@ -30,136 +30,50 @@ escolar.
 - Banco de Dados: PostgreSQL
 
 ## Backlog do produto
-
-- Funcionalidades Principais
-  - Gestão de Usuários
-  - Cadastro de alunos
-  - Cadastro de professores
-  - Cadastro de disciplinas
-  - Edição e exclusão de usuários
-  - Visualização de lista de alunos, professores e disciplinas
-  
-- Geração de Horários
-  - Módulo para inserção de restrições (disponibilidade dos professores)
-  - Algoritmo para geração automática de horários
-  - Visualização do horário gerado
-  - Opção para reprogramar horários
-  
-- Gestão de Turmas
-  - Criação e edição de turmas
-  - Atribuição de alunos a turmas
-  - Atribuição de professores a turmas
-  
-- Relatórios e Estatísticas
-  - Geração de relatórios sobre frequência dos alunos
-  - Relatórios sobre carga horária dos professores
-  - Estatísticas sobre disciplinas (aproveitamento, notas)
-  
-- Interface do Usuário
-  - Design responsivo
-  - Navegação intuitiva
-  - Sistema de autenticação (login/logout)
-  
-- Tarefas Técnicas
-  - Configuração do ambiente de desenvolvimento
-  - Escolha da stack tecnológica (ex.: Frontend, Backend, Banco de Dados)
-  - Implementação da API RESTful para comunicação entre frontend e backend 
-
-- Melhorias Futuras
-  - Integração com sistemas externos (ex.: plataformas de ensino)
-  - Funcionalidade para feedback dos alunos sobre as aulas
-  - Módulo para gestão financeira (mensalidades, pagamentos)
+- Como aluno, eu gostaria de me cadastrar na escola em que estudo.
+- Como aluno, eu gostaria de visualizar os horários de todas as minhas aulas.
+- Como aluno, eu gostaria de acessar minhas notas por disciplina, com detalhamento por atividades e provas.
+- Como aluno, eu gostaria de consultar minhas faltas por disciplina, com alertas caso eu esteja perto do limite permitido.
+- Como aluno, eu gostaria de baixar boletins, atestados de matrícula e outros documentos.
+- Como professor, eu gostaria de me cadastrar nas escolas em que dou aula.
+- Como professor, eu gostaria de acessar todas as disciplinas que sou responsável.
+- Como professor, eu gostaria de acessar meu quadro de horários.
+- Como professor, eu gostaria de inserir as notas dos meus alunos.
+- Como diretor, eu gostaria de cadastrar minha escola no sistema.
+- Como diretor, eu gostaria de adicionar novas disciplinas ao currículo da escola.
+- Como diretor, eu gostaria de alocar professores de acordo com suas áreas de especialidade para cada disciplina.
+- Como diretor, eu gostaria de gerar automaticamente o quadro de horários de toda a escola.
+- Como diretor, eu gostaria de gerenciar a criação e a divisão de turmas.
  
-- Observações
-  - As prioridades das tarefas podem ser ajustadas conforme o feedback dos usuários e as necessidades emergentes.
+ ## Backlog da sprint
 
- ## Backlog dos Sprints
+História #1: Como diretor, eu gostaria de cadastrar minha escola no sistema.
+- Instalar as dependencias do projeto.
+- Criar as tabelas iniciais.
+- Implementar as operações de CRUD de usuarios.
+- Criar a tela de login para o usuario.
+- Implementar sistema de autenticação.
+- Implementar as operações de CRUD de diretores.
+- Criar a tela de registro de diretores.
+- Criar a tela inicial para diretores.
+- Implementar as operações de CRUD de escolas.
+- Criar a tela de registro de escola.
 
-- Sprint 1: Levantamento de Requisitos
-  - Reuniões com stakeholders para entender necessidades
-  - Documentação dos requisitos funcionais
-  - Documentação dos requisitos não funcionais
-  - Pesquisa sobre soluções existentes
-    
-- Sprint 2: Prototipagem da Interface
-  - Criação de protótipo (Figma) da interface do usuário
-  - Validação do protótipo com usuários finais
-  - Ajustes no protótipo baseados no feedback
-    
-- Sprint 3: Desenvolvimento da Gestão de Usuários
-  - Implementação do cadastro de alunos
-  - Implementação do cadastro de professores
-  - Implementação do cadastro de disciplinas
-  - Edição e exclusão de usuários
-  - Visualização da lista de alunos, professores e disciplinas
-  - Teste manuais
- 
-- Sprint 4: Desenvolvimento do Módulo de Geração de Horários
-  - Implementação do módulo para inserção de restrições (disponibilidade dos professores)
-  - Desenvolvimento do algoritmo para geração automática de horários
-  - Visualização do horário gerado
-  - Opção para reprogramar horários
-  - Testes manuais
-    
-- Sprint 5: Integração e Testes Finais
-  - Integração dos módulos desenvolvidos (gestão de usuários e geração de horários)
-  - Testes funcionais da aplicação completa
-  - Testes não funcionais (performance, segurança)
-  - Correção de bugs identificados durante os testes
-    
-- Sprint 6: Documentação e Treinamento
-  - Criação da documentação do usuário (guias, tutoriais)
-  - Criação da documentação técnica (API, arquitetura)  
-    
-- Sprint 7: Lançamento e Feedback
-  - Lançamento da aplicação em ambiente produtivo
-  - Coleta de feedback dos usuários sobre a aplicação
-  - Planejamento das melhorias futuras com base no feedback recebido
- 
-## Backlog para Implementação do Backend
+Historia #2: Como aluno, eu gostaria de me cadastrar na escola em que estudo.
+- Criar a tabela de alunos.
+- Implementar as operações de CRUD de aluno.
+- Criar a tela de registro de aluno.
+- Criar a tela inicial para alunos.
 
-- Estrutura do Projeto
-  - Criar diretório do projeto
-  - Inicializar o projeto Node.js com npm init -y
-  - Instalar dependências:
-     - express
-     - pg (node-postgres)
-     - PM2 (para desenvolvimento e Daemon de execução)
-     - dotenv (para variáveis de ambiente)
-  - Configuração do Banco de Dados
-     - Instalar e configurar PostgreSQL
-     - Criar um banco de dados no PostgreSQL
-     - Criar tabelas necessárias (ex.: usuários, turmas, disciplinas)
-     - Configurar o arquivo .env com a string de conexão do banco de dados
-  - Desenvolvimento da API
-     - Endpoints CRUD para Usuários
-      - Implementar endpoint POST /usuarios para criar um novo usuário
-      - Implementar endpoint GET /usuarios para listar todos os usuários
-      - Implementar endpoint GET /usuarios/:id para obter um usuário específico
-      - Implementar endpoint PUT /usuarios/:id para atualizar um usuário existente
-      - Implementar endpoint DELETE /usuarios/:id para deletar um usuário
-  - Endpoints CRUD para Disciplinas
-      - Implementar endpoint POST /disciplinas para criar uma nova disciplina
-      - Implementar endpoint GET /disciplinas para listar todas as disciplinas
-      - Implementar endpoint GET /disciplinas/:id para obter uma disciplina específica
-      - Implementar endpoint PUT /disciplinas/:id para atualizar uma disciplina existente
-      - Implementar endpoint DELETE /disciplinas/:id para deletar uma disciplina
-  - Endpoints CRUD para Turmas
-      - Implementar endpoint POST /turmas para criar uma nova turma
-      - Implementar endpoint GET /turmas para listar todas as turmas
-      - Implementar endpoint GET /turmas/:id para obter uma turma específica
-      - Implementar endpoint PUT /turmas/:id para atualizar uma turma existente
-      - Implementar endpoint DELETE /turmas/:id para deletar uma turma
-  - Middleware e Configurações Adicionais
-       - Configurar middleware para tratamento de erros
-       - Configurar middleware de CORS (Cross-Origin Resource Sharing)
-       - Configurar middleware de parsing JSON
+Historia #3: Como professor, eu gostaria de me cadastrar nas escolas em que dou aula.
+- Criar a tabela de professores.
+- Implementar as operações de CRUD de professores.
+- Criar a tela de registro de professor.
+- Criar a tela inicial para professores.
 
-  - Documentação da API
-       - Criar documentação da API usando Swagger ou Postman
-       - Preparação para Produção
-       - Otimizar a configuração do banco de dados (ex.: pooling)
-       - Configurar variáveis de ambiente adequadas para produção
-  - Melhorias Futuras
-       - Implementar autenticação (JWT ou OAuth)
-       - Adicionar funcionalidades de busca avançada nas APIs
+Historia #4: Como diretor, eu gostaria de adicionar novas disciplinas ao currículo da escola.
+- Criar a tabela de disciplinas
+- Implementar as operações de CRUD de discplinas.
+- Criar autorização baseada em cargo do usuario.
+- Adicionar autorização para somente diretores criarem discplinas.
+- Implementar o formulario de crição de discplina.
