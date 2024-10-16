@@ -1,0 +1,45 @@
+services:
+    smartclass:
+        build:
+            context: .
+        environment:
+            PORT: ${PORT}
+        ports:
+            - '${PORT}:${PORT}'
+        networks:
+            - postgres
+        develop:
+            watch:
+                - action: rebuild
+                  path: .
+                  target: /usr/src/app
+
+    postgres:
+        image: postgres
+        environment:
+            POSTGRES_USER: ${POSTGRES_USER}
+            POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+        ports:
+            - '5432:5432'
+        networks:
+            - postgres
+        restart: unless-stopped
+
+    pgadmin:
+        image: dpage/pgadmin4
+        environment:
+            PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+            PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+        ports:
+            - '5050:80'
+        networks:
+            - postgres
+        restart: unless-stopped
+
+networks:
+    postgres:
+        driver: bridge
+
+volumes:
+    postgres:
+    pgadmin:

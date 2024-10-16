@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "target": "es2022",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "module": "nodenext",
+        "baseUrl": ".",
+        "rootDir": ".",
+        "moduleResolution": "nodenext",
+        "paths": {
+            "@/*": ["./src/*"]
+        },
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "strict": true,
+        "skipLibCheck": true
+    },
+    "exclude": ["dist", "node_modules"],
+    "include": ["src/**/*"]
+}
