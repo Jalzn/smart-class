@@ -1,0 +1,38 @@
+services:     
+  postgresql:
+    container_name: postgresql
+    platform: linux/amd64 #for platform error on Apple M1 chips
+    restart: unless-stopped
+    env_file: .env
+    image: postgres:12.0-alpine
+    environment:
+      POSTGRES_USER: smartclass_pg #${DATABASE_USERNAME}
+      POSTGRES_PASSWORD: 25#!*kJ219pxz@ #${DATABASE_PASSWORD}
+      POSTGRES_DB: smartclass_pg #${DATABASE_NAME}
+    volumes:      
+      - ./data:/var/lib/postgresql/data/ # if you want to use a bind folder
+
+    ports:
+      - '27480:5432'
+    networks:
+      - smartclass  
+
+  pgadmin-compose:
+    container_name: pgadmin_smartclass
+    image: elestio/pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "nucleustec@gmail.com"
+      PGADMIN_DEFAULT_PASSWORD: "25#!*kJ219pxz@"
+    ports:
+      - "16843:80"
+    depends_on:
+      - postgresql
+    networks:
+      - smartclass
+
+volumes:
+
+networks:
+  smartclass:
+    name: smartclass
+    driver: bridge
