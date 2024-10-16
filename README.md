@@ -28,6 +28,7 @@ escolar.
 - Backend Framework: Express.js
 - Frontend Framework: Next.js
 - Banco de Dados: PostgreSQL
+- Conteinerização e orquestração: Dockeer e Docker Compose
 
 ## Backlog do produto
 - Como aluno, eu gostaria de me cadastrar na escola em que estudo.
