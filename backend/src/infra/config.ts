@@ -4,9 +4,11 @@ dotenv.config()
 
 class Config {
     public port: number
+    public secret: string
 
     constructor() {
         this.port = Number(this.getValue('PORT'))
+        this.secret = this.getValue('SECRET')
     }
 
     private getValue(value: string) {
