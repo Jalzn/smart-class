@@ -20,3 +20,10 @@ model User {
   createdAt DateTime
   updatedAt DateTime
 }
+
+model Teacher {
+  id String @id
+  name String
+  createdAt DateTime
+  updatedAt DateTime
+}
