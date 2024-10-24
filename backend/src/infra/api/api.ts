@@ -1,22 +1,91 @@
-import { Server } from '../server'
+import { PrismaClient } from '@prisma/client'
+import express, { Express, NextFunction, Request, Response } from 'express'
+import config from '../config'
+import { prisma } from '../database'
+import { UserRepository } from '../repositories'
+import { HashService } from '../services/hash.service'
 import UsersController from './controllers/users.controller'
+import { ApiError } from './errors'
 
 export class API {
-    httpServer: Server
+    private http: Express
+
+    private database: PrismaClient
+
+    private repositories: Record<string, any>
+    private services: Record<string, any>
 
     constructor() {
-        this.httpServer = new Server()
+        this.http = express()
+
+        this.repositories = {}
+        this.services = {}
+
+        this.database = prisma
     }
 
-    setup() {
-        this.httpServer.init()
+    public setup() {
+        this.http.use(express.json())
 
-        this.httpServer.registerController(UsersController)
+        this.registerRepositories()
+        this.registerServices()
 
-        this.httpServer.setupErrorHandler()
+        this.registerUsersController()
+
+        this.setupErrorHandler()
     }
 
-    start() {
-        this.httpServer.run()
+    public start() {
+        this.http.listen(config.port, () => {
+            console.log(`Starting API at ${config.port}`)
+        })
+    }
+
+    private registerRepositories() {
+        this.repositories['UserRepository'] = new UserRepository(this.database)
+    }
+
+    private registerServices() {
+        this.services['HashService'] = new HashService()
+    }
+
+    private registerUsersController() {
+        const usersController = new UsersController(
+            this.repositories['UserRepository'],
+            this.services['HashService']
+        )
+
+        const router = express.Router()
+
+        router.get('/', (req, res, next) =>
+            usersController.findAll(req, res, next)
+        )
+        router.get('/:id', (req, res, next) =>
+            usersController.findOneById(req, res, next)
+        )
+        router.post('/', (req, res, next) =>
+            usersController.create(req, res, next)
+        )
+        router.delete('/:id', (req, res, next) =>
+            usersController.delete(req, res, next)
+        )
+
+        this.http.use('/users', router)
+    }
+
+    private setupErrorHandler() {
+        this.http.use(
+            (
+                err: ApiError,
+                req: Request,
+                res: Response,
+                next: NextFunction
+            ) => {
+                res.status(err.status).send({
+                    message: err.message,
+                    status: err.status,
+                })
+            }
+        )
     }
 }
