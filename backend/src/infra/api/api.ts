@@ -6,6 +6,8 @@ import { UserRepository } from '../repositories'
 import { HashService } from '../services/hash.service'
 import UsersController from './controllers/users.controller'
 import { ApiError } from './errors'
+import { AuthMiddleware } from './middlewares/auth.middleware'
+import { JwtService } from '../services/jwt.service'
 
 export class API {
     private http: Express
@@ -14,12 +16,14 @@ export class API {
 
     private repositories: Record<string, any>
     private services: Record<string, any>
+    private middlewares: Record<string, any>
 
     constructor() {
         this.http = express()
 
         this.repositories = {}
         this.services = {}
+        this.middlewares = {}
 
         this.database = prisma
     }
@@ -29,6 +33,7 @@ export class API {
 
         this.registerRepositories()
         this.registerServices()
+        this.registerMiddlewares()
 
         this.registerUsersController()
 
@@ -47,6 +52,14 @@ export class API {
 
     private registerServices() {
         this.services['HashService'] = new HashService()
+        this.services['JwtService'] = new JwtService()
+    }
+
+    private registerMiddlewares() {
+        this.middlewares["Auth"] = new AuthMiddleware(
+            this.repositories["UserRepository"],
+            this.services['JwtService']
+        )
     }
 
     private registerUsersController() {
@@ -70,7 +83,11 @@ export class API {
             usersController.delete(req, res, next)
         )
 
-        this.http.use('/users', router)
+        this.http.use(
+            '/users',
+            (req, res, next) => this.middlewares["Auth"].use(req, res, next), 
+            router
+        )
     }
 
     private setupErrorHandler() {
