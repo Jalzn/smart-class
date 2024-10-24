@@ -12,14 +12,14 @@ export default class Teacher {
         this.name = name
     }
 
-    public create(name: string) {
+    public static create(name: string) {
         return new Teacher({
             id: crypto.randomUUID().toString(),
             name: name,
         })
     }
 
-    public with(props: ITeacherProps) {
+    public static with(props: ITeacherProps) {
         return new Teacher(props)
     }
 }
