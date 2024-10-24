@@ -19,6 +19,12 @@ export class AuthMiddleware {
             return next(new ApiError("Bearer token is missing.", 401))
         }
 
+        const { id } = this.jwtService.decode(token)
+
+        const user = await this.userRepository.findById(id)
+
+        res.locals["user"] = user
+
         next()
     }
 
