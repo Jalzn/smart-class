@@ -8,6 +8,7 @@ import UsersController from './controllers/users.controller'
 import { ApiError } from './errors'
 import { AuthMiddleware } from './middlewares/auth.middleware'
 import { JwtService } from '../services/jwt.service'
+import { AuthController } from './controllers/auth.controller'
 
 export class API {
     private http: Express
@@ -36,6 +37,7 @@ export class API {
         this.registerMiddlewares()
 
         this.registerUsersController()
+        this.registerAuthController()
 
         this.setupErrorHandler()
     }
@@ -60,6 +62,20 @@ export class API {
             this.repositories["UserRepository"],
             this.services['JwtService']
         )
+    }
+
+    private registerAuthController() {
+        const authController = new AuthController(
+            this.repositories["UserRepository"],
+            this.services["JwtService"],
+            this.services["HashService"]
+        )
+
+        const router = express.Router()
+
+        router.post('/login', (req, res, next) => authController.login(req, res, next))
+
+        this.http.use('/auth', router)
     }
 
     private registerUsersController() {
