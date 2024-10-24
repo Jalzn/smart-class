@@ -34,6 +34,18 @@ export class UserRepository implements IUserRepository {
         return User.with(row)
     }
 
+    public async findByEmail(email: string): Promise<User> {
+        const row = await this.client.user.findUnique({
+            where: {email}
+        })
+
+        if(!row) {
+            throw new NotFoundError('User not found.')
+        }
+
+        return User.with(row)
+    }
+
     public async create(user: User): Promise<void> {
         await this.client.user.create({
             data: {
