@@ -36,10 +36,10 @@ export class UserRepository implements IUserRepository {
 
     public async findByEmail(email: string): Promise<User> {
         const row = await this.client.user.findUnique({
-            where: {email}
+            where: { email },
         })
 
-        if(!row) {
+        if (!row) {
             throw new NotFoundError('User not found.')
         }
 

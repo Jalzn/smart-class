@@ -4,11 +4,11 @@ import config from '../config'
 import { prisma } from '../database'
 import { UserRepository } from '../repositories'
 import { HashService } from '../services/hash.service'
+import { JwtService } from '../services/jwt.service'
+import { AuthController } from './controllers/auth.controller'
 import UsersController from './controllers/users.controller'
 import { ApiError } from './errors'
 import { AuthMiddleware } from './middlewares/auth.middleware'
-import { JwtService } from '../services/jwt.service'
-import { AuthController } from './controllers/auth.controller'
 
 export class API {
     private http: Express
@@ -58,22 +58,24 @@ export class API {
     }
 
     private registerMiddlewares() {
-        this.middlewares["Auth"] = new AuthMiddleware(
-            this.repositories["UserRepository"],
+        this.middlewares['Auth'] = new AuthMiddleware(
+            this.repositories['UserRepository'],
             this.services['JwtService']
         )
     }
 
     private registerAuthController() {
         const authController = new AuthController(
-            this.repositories["UserRepository"],
-            this.services["JwtService"],
-            this.services["HashService"]
+            this.repositories['UserRepository'],
+            this.services['JwtService'],
+            this.services['HashService']
         )
 
         const router = express.Router()
 
-        router.post('/login', (req, res, next) => authController.login(req, res, next))
+        router.post('/login', (req, res, next) =>
+            authController.login(req, res, next)
+        )
 
         this.http.use('/auth', router)
     }
@@ -101,7 +103,7 @@ export class API {
 
         this.http.use(
             '/users',
-            (req, res, next) => this.middlewares["Auth"].use(req, res, next), 
+            (req, res, next) => this.middlewares['Auth'].use(req, res, next),
             router
         )
     }

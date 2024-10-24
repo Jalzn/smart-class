@@ -1,5 +1,5 @@
-import ValidationError from './ValidationError'
 import { NotFoundError } from './NotFoundError'
 import UnauthorizedError from './UnauthorizedError'
+import ValidationError from './ValidationError'
 
-export { ValidationError, NotFoundError, UnauthorizedError }
+export { NotFoundError, UnauthorizedError, ValidationError }

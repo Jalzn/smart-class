@@ -1,4 +1,4 @@
-import User from './User'
 import Teacher from './Teacher'
+import User from './User'
 
-export { User, Teacher }
+export { Teacher, User }

@@ -7,16 +7,16 @@ export default class Teacher {
     public id: string
     public name: string
 
-    private constructor({id, name}: ITeacherProps) {
+    private constructor({ id, name }: ITeacherProps) {
         this.id = id
         this.name = name
-    } 
+    }
 
     public create(name: string) {
         return new Teacher({
             id: crypto.randomUUID().toString(),
-            name: name
-        }) 
+            name: name,
+        })
     }
 
     public with(props: ITeacherProps) {

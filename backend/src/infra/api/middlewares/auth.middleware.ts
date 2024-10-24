@@ -1,7 +1,7 @@
-import { IUserRepository } from "@/domain/repositories";
-import { NextFunction, Response, Request } from "express";
-import { ApiError } from "../errors";
-import { IJwtService } from "@/domain/services";
+import { IUserRepository } from '@/domain/repositories'
+import { IJwtService } from '@/domain/services'
+import { NextFunction, Request, Response } from 'express'
+import { ApiError } from '../errors'
 
 export class AuthMiddleware {
     private userRepository: IUserRepository
@@ -13,28 +13,28 @@ export class AuthMiddleware {
     }
 
     async use(req: Request, res: Response, next: NextFunction) {
-        const token = this.extractBearerToken(req) 
+        const token = this.extractBearerToken(req)
 
-        if(!token) {
-            return next(new ApiError("Bearer token is missing.", 401))
+        if (!token) {
+            return next(new ApiError('Bearer token is missing.', 401))
         }
 
         const { id } = this.jwtService.decode(token)
 
         const user = await this.userRepository.findById(id)
 
-        res.locals["user"] = user
+        res.locals['user'] = user
 
         next()
     }
 
     private extractBearerToken(req: Request) {
-        const authHeader = req.headers.authorization;
+        const authHeader = req.headers.authorization
 
         if (authHeader && authHeader.startsWith('Bearer ')) {
-          return authHeader.substring(7, authHeader.length);
+            return authHeader.substring(7, authHeader.length)
         }
-      
-        return null;
+
+        return null
     }
 }
