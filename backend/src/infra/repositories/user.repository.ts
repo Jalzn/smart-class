@@ -1,7 +1,8 @@
 import { User } from '@/domain/entities'
+import { AlreadyExistsError } from '@/domain/errors'
 import { NotFoundError } from '@/domain/errors/NotFoundError'
 import { IUserRepository } from '@/domain/repositories'
-import { PrismaClient } from '@prisma/client'
+import { Prisma, PrismaClient } from '@prisma/client'
 
 export class UserRepository implements IUserRepository {
     private client: PrismaClient
@@ -47,6 +48,8 @@ export class UserRepository implements IUserRepository {
     }
 
     public async create(user: User): Promise<void> {
+        try {
+
         await this.client.user.create({
             data: {
                 id: user.id,
@@ -56,6 +59,13 @@ export class UserRepository implements IUserRepository {
                 updatedAt: new Date(),
             },
         })
+        } catch(e) {
+            if(e instanceof Prisma.PrismaClientKnownRequestError) {
+                if(e.code === 'P2002') {
+                    throw new AlreadyExistsError('User already exists')
+                }
+            }
+        }
     }
 
     public async deleteById(id: string): Promise<void> {

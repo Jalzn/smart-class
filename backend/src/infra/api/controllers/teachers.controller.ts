@@ -27,6 +27,7 @@ export class TeachersController {
             const response = await this.registerTeacherUsecase.execute(req.body)
             res.status(201).send(response)
         } catch(e) {
+            console.log(e)
             if(e instanceof ValidationError) {
                 next(new ApiError(e.message, 422))
             }

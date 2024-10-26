@@ -1,4 +1,4 @@
-import { IsEmail, IsString, IsStrongPassword } from 'class-validator'
+import { IsEmail, IsString, MaxLength, MinLength } from 'class-validator'
 
 export type IRegisterTeacherInputDTO = {
     email: string
@@ -11,7 +11,8 @@ export class RegisterTeacherInputDTO implements IRegisterTeacherInputDTO {
     @IsString()
     public email: string
 
-    @IsStrongPassword()
+    @MinLength(8)
+    @MaxLength(16)
     @IsString()
     public password: string
 
@@ -21,6 +22,6 @@ export class RegisterTeacherInputDTO implements IRegisterTeacherInputDTO {
     constructor(dto: IRegisterTeacherInputDTO) {
         this.email = dto.email
         this.password = dto.password
-        this.name = dto.password
+        this.name = dto.name
     }
 }

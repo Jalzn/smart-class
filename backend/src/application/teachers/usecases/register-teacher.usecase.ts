@@ -1,5 +1,5 @@
 import { Teacher, User } from '@/domain/entities'
-import { ValidationError } from '@/domain/errors'
+import { AlreadyExistsError, ValidationError } from '@/domain/errors'
 import { ITeacherRepository, IUserRepository } from '@/domain/repositories'
 import { IHashService, IJwtService } from '@/domain/services'
 import { validate } from 'class-validator'
