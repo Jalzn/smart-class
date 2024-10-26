@@ -38,6 +38,7 @@ export class TeacherRepository implements ITeacherRepository {
         await this.client.teacher.create({
             data: {
                 id: teacher.id,
+                userId: teacher.user!.id,
                 name: teacher.name,
                 createdAt: new Date(),
                 updatedAt: new Date(),

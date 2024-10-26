@@ -2,13 +2,14 @@ import { PrismaClient } from '@prisma/client'
 import express, { Express, NextFunction, Request, Response } from 'express'
 import config from '../config'
 import { prisma } from '../database'
-import { UserRepository } from '../repositories'
+import { TeacherRepository, UserRepository } from '../repositories'
 import { HashService } from '../services/hash.service'
 import { JwtService } from '../services/jwt.service'
 import { AuthController } from './controllers/auth.controller'
 import UsersController from './controllers/users.controller'
 import { ApiError } from './errors'
 import { AuthMiddleware } from './middlewares/auth.middleware'
+import { TeachersController } from './controllers/teachers.controller'
 
 export class API {
     private http: Express
@@ -38,6 +39,7 @@ export class API {
 
         this.registerUsersController()
         this.registerAuthController()
+        this.registerTeachersController()
 
         this.setupErrorHandler()
     }
@@ -50,6 +52,7 @@ export class API {
 
     private registerRepositories() {
         this.repositories['UserRepository'] = new UserRepository(this.database)
+        this.repositories['TeacherRepository'] = new TeacherRepository(this.database)
     }
 
     private registerServices() {
@@ -106,6 +109,21 @@ export class API {
             (req, res, next) => this.middlewares['Auth'].use(req, res, next),
             router
         )
+    }
+
+    private registerTeachersController() {
+        const teachersController = new TeachersController(
+            this.repositories['TeacherRepository'],
+            this.repositories['UserRepository'],
+            this.services['JwtService'],
+            this.services['HashService']
+        )
+
+        const router = express.Router()
+
+        router.post('/', (req, res, next) => teachersController.register(req, res, next))
+
+        this.http.use('/teachers', router)
     }
 
     private setupErrorHandler() {
