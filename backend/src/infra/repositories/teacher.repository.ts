@@ -1,7 +1,7 @@
-import { Teacher } from "@/domain/entities";
-import { NotFoundError } from "@/domain/errors";
-import { ITeacherRepository } from "@/domain/repositories";
-import { PrismaClient } from "@prisma/client";
+import { Teacher } from '@/domain/entities'
+import { NotFoundError } from '@/domain/errors'
+import { ITeacherRepository } from '@/domain/repositories'
+import { PrismaClient } from '@prisma/client'
 
 export class TeacherRepository implements ITeacherRepository {
     private client: PrismaClient
@@ -15,7 +15,7 @@ export class TeacherRepository implements ITeacherRepository {
 
         const rows = await this.client.teacher.findMany()
 
-        rows.forEach(row => {
+        rows.forEach((row) => {
             teachers.push(Teacher.with(row))
         })
 
@@ -24,11 +24,11 @@ export class TeacherRepository implements ITeacherRepository {
 
     async findById(id: string): Promise<Teacher> {
         const row = await this.client.teacher.findUnique({
-            where: {id}
+            where: { id },
         })
 
-        if(!row) {
-            throw new NotFoundError("Teacher not found.")
+        if (!row) {
+            throw new NotFoundError('Teacher not found.')
         }
 
         return Teacher.with(row)
@@ -40,23 +40,23 @@ export class TeacherRepository implements ITeacherRepository {
                 id: teacher.id,
                 name: teacher.name,
                 createdAt: new Date(),
-                updatedAt: new Date()
-            }
+                updatedAt: new Date(),
+            },
         })
     }
 
     async update(teacher: Teacher, data: Partial<Teacher>): Promise<void> {
         await this.client.teacher.update({
             where: {
-                id: teacher.id
+                id: teacher.id,
             },
-            data 
+            data,
         })
     }
 
     async deleteById(id: string): Promise<void> {
         await this.client.teacher.delete({
-            where: {id}
+            where: { id },
         })
     }
 }

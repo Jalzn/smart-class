@@ -1,3 +1,5 @@
+import { User } from '@/domain/entities'
+
 type ITeacherProps = {
     id: string
     name: string
@@ -6,6 +8,7 @@ type ITeacherProps = {
 export default class Teacher {
     public id: string
     public name: string
+    public user?: User
 
     private constructor({ id, name }: ITeacherProps) {
         this.id = id
