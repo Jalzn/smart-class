@@ -6,10 +6,10 @@ import { TeacherRepository, UserRepository } from '../repositories'
 import { HashService } from '../services/hash.service'
 import { JwtService } from '../services/jwt.service'
 import { AuthController } from './controllers/auth.controller'
+import { TeachersController } from './controllers/teachers.controller'
 import UsersController from './controllers/users.controller'
 import { ApiError } from './errors'
 import { AuthMiddleware } from './middlewares/auth.middleware'
-import { TeachersController } from './controllers/teachers.controller'
 
 export class API {
     private http: Express
@@ -52,7 +52,9 @@ export class API {
 
     private registerRepositories() {
         this.repositories['UserRepository'] = new UserRepository(this.database)
-        this.repositories['TeacherRepository'] = new TeacherRepository(this.database)
+        this.repositories['TeacherRepository'] = new TeacherRepository(
+            this.database
+        )
     }
 
     private registerServices() {
@@ -121,7 +123,9 @@ export class API {
 
         const router = express.Router()
 
-        router.post('/', (req, res, next) => teachersController.register(req, res, next))
+        router.post('/', (req, res, next) =>
+            teachersController.register(req, res, next)
+        )
 
         this.http.use('/teachers', router)
     }

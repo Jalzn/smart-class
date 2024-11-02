@@ -1,9 +1,9 @@
-import { RegisterTeacherUsecase } from "@/application/teachers/usecases/register-teacher.usecase";
-import { AlreadyExistsError, ValidationError } from "@/domain/errors";
-import { ITeacherRepository, IUserRepository } from "@/domain/repositories";
-import { IHashService, IJwtService } from "@/domain/services";
-import { NextFunction, Request, Response } from "express";
-import { ApiError } from "../errors";
+import { RegisterTeacherUsecase } from '@/application/teachers/usecases/register-teacher.usecase'
+import { AlreadyExistsError, ValidationError } from '@/domain/errors'
+import { ITeacherRepository, IUserRepository } from '@/domain/repositories'
+import { IHashService, IJwtService } from '@/domain/services'
+import { NextFunction, Request, Response } from 'express'
+import { ApiError } from '../errors'
 
 export class TeachersController {
     private registerTeacherUsecase: RegisterTeacherUsecase
@@ -26,15 +26,13 @@ export class TeachersController {
         try {
             const response = await this.registerTeacherUsecase.execute(req.body)
             res.status(201).send(response)
-        } catch(e) {
+        } catch (e) {
             console.log(e)
-            if(e instanceof ValidationError) {
+            if (e instanceof ValidationError) {
                 next(new ApiError(e.message, 422))
-            }
-            else if(e instanceof AlreadyExistsError) {
+            } else if (e instanceof AlreadyExistsError) {
                 next(new ApiError(e.message, 422))
-            }
-            else {
+            } else {
                 next(new ApiError())
             }
         }
