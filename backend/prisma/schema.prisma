@@ -6,7 +6,7 @@
 
 generator client {
   provider = "prisma-client-js"
-  output = "../node_modules/.prisma/client"
+  output   = "../node_modules/.prisma/client"
 }
 
 datasource db {
@@ -15,17 +15,61 @@ datasource db {
 }
 
 model User {
-  id String @id
-  email String @unique
-  password String
+  id        String   @id
+  email     String   @unique
+  password  String
   createdAt DateTime
-  updatedAt DateTime
+  updatedAt DateTime @updatedAt
 }
 
 model Teacher {
-  id String @id
-  name String
+  id        String    @id
+  name      String
   userId    String
+  School    School?   @relation(fields: [schoolId], references: [id])
+  schoolId  String?
   createdAt DateTime
-  updatedAt DateTime
+  updatedAt DateTime  @updatedAt
+  Subject   Subject[]
+}
+
+model Student {
+  id        String   @id
+  name      String
+  School    School?  @relation(fields: [schoolId], references: [id])
+  schoolId  String?
+  createdAt DateTime
+  updatedAt DateTime @updatedAt
+}
+
+model School {
+  id         String      @id
+  teachers   Teacher[]
+  students   Student[]
+  classrooms Classroom[]
+  createdAt  DateTime
+  updatedAt  DateTime    @updatedAt
+}
+
+model Classroom {
+  id        String    @id
+  name      String
+  grade     String
+  subjects  Subject[]
+  School    School?   @relation(fields: [schoolId], references: [id])
+  schoolId  String?
+  createdAt DateTime
+  updatedAt DateTime  @updatedAt
+}
+
+model Subject {
+  id          String     @id
+  code        String
+  name        String
+  teacher     Teacher    @relation(fields: [teacherId], references: [id])
+  teacherId   String
+  createdAt   DateTime
+  updatedAt   DateTime   @updatedAt
+  Classroom   Classroom? @relation(fields: [classroomId], references: [id])
+  classroomId String?
 }
