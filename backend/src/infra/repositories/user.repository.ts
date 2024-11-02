@@ -49,19 +49,18 @@ export class UserRepository implements IUserRepository {
 
     public async create(user: User): Promise<void> {
         try {
-
-        await this.client.user.create({
-            data: {
-                id: user.id,
-                email: user.email,
-                password: user.password,
-                createdAt: new Date(),
-                updatedAt: new Date(),
-            },
-        })
-        } catch(e) {
-            if(e instanceof Prisma.PrismaClientKnownRequestError) {
-                if(e.code === 'P2002') {
+            await this.client.user.create({
+                data: {
+                    id: user.id,
+                    email: user.email,
+                    password: user.password,
+                    createdAt: new Date(),
+                    updatedAt: new Date(),
+                },
+            })
+        } catch (e) {
+            if (e instanceof Prisma.PrismaClientKnownRequestError) {
+                if (e.code === 'P2002') {
                     throw new AlreadyExistsError('User already exists')
                 }
             }
