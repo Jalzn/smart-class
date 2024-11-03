@@ -1,24 +1,27 @@
-import { User } from '@/domain/entities'
+import Subject from "./Subject"
 
 type ITeacherProps = {
     id: string
     name: string
+    subjects: Subject[]
 }
 
 export default class Teacher {
     public id: string
     public name: string
-    public user?: User
+    public subjects: Subject[]
 
-    private constructor({ id, name }: ITeacherProps) {
+    private constructor({ id, name, subjects }: ITeacherProps) {
         this.id = id
         this.name = name
+        this.subjects = subjects
     }
 
     public static create(name: string) {
         return new Teacher({
             id: crypto.randomUUID().toString(),
             name: name,
+            subjects: []
         })
     }
 

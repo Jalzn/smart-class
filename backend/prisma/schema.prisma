@@ -25,12 +25,11 @@ model User {
 model Teacher {
   id        String    @id
   name      String
-  userId    String
   School    School?   @relation(fields: [schoolId], references: [id])
   schoolId  String?
   createdAt DateTime
   updatedAt DateTime  @updatedAt
-  Subject   Subject[]
+  subjects  Subject[]
 }
 
 model Student {
@@ -54,7 +53,7 @@ model School {
 model Classroom {
   id        String    @id
   name      String
-  grade     String
+  grade     Int
   subjects  Subject[]
   School    School?   @relation(fields: [schoolId], references: [id])
   schoolId  String?

@@ -8,6 +8,9 @@ import { JwtService } from '../services/jwt.service'
 import { AuthController } from './controllers/auth.controller'
 import { ApiError } from './errors'
 import { AuthMiddleware } from './middlewares/auth.middleware'
+import ClassroomController from './controllers/classroom.controller'
+import { ClassroomRepository } from '../repositories/classroom.repository'
+import { TeachersController } from './controllers/teachers.controller'
 
 export class API {
     private http: Express
@@ -36,6 +39,8 @@ export class API {
         this.registerMiddlewares()
 
         this.registerAuthController()
+        this.registerClassroomController()
+        this.registerTeacherController()
 
         this.setupErrorHandler()
     }
@@ -51,6 +56,7 @@ export class API {
         this.repositories['TeacherRepository'] = new TeacherRepository(
             this.database
         )
+        this.repositories['ClassroomRepository'] = new ClassroomRepository(this.database)
     }
 
     private registerServices() {
@@ -83,6 +89,50 @@ export class API {
         )
 
         this.http.use('/auth', router)
+    }
+
+    private registerClassroomController() {
+        const classroomController = new ClassroomController(
+            this.repositories['ClassroomRepository']
+        )
+
+        const router = express.Router()
+
+        router.get('/', (req, res, next) =>
+            classroomController.findAll(req, res, next)
+        )
+
+        router.get('/:id', (req, res, next) =>
+            classroomController.findById(req, res, next)
+        )
+
+        router.post('/', (req, res, next) =>
+            classroomController.create(req, res, next)
+        )
+
+        this.http.use('/classrooms', router)
+    }
+
+    private registerTeacherController() {
+        const teacherController = new TeachersController(
+            this.repositories['TeacherRepository']
+        )
+
+        const router = express.Router()
+
+        router.get('/', (req, res, next) =>
+            teacherController.findAll(req, res, next)
+        )
+
+        router.post('/', (req, res, next) =>
+            teacherController.register(req, res, next)
+        )
+
+        router.delete('/:teacherId', (req, res, next) =>
+            teacherController.deleteById(req, res, next)
+        )
+
+        this.http.use('/teachers', router)
     }
 
 

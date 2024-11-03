@@ -1,5 +1,6 @@
 import Student from './Student'
 import Subject from './Subject'
+import Teacher from './Teacher'
 
 export type ClassroomGrade = 1 | 2 | 3
 
@@ -26,10 +27,6 @@ export default class Classroom implements IClassroomProps {
         this.subjects = subjects
     }
 
-    private createDefaultSubjects() {
-        throw new Error("Method not implemented.")
-    }
-
     public static create(name: string, grade: ClassroomGrade) {
         const classroom = new Classroom({
             id: crypto.randomUUID().toString(),
@@ -38,8 +35,6 @@ export default class Classroom implements IClassroomProps {
             students: [],
             subjects: []
         })
-
-        classroom.createDefaultSubjects()
 
         return classroom
     }
