@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 
 export function HeaderPage({ children }: { children: ReactNode }) {
     return (
-        <Flex alignItems="center" background="cyan.600" px={8} py={16} mb={12}>
+        <Flex alignItems="center" bgGradient="to-tr" gradientFrom="cyan.600" gradientTo="cyan.400" borderBottom="sm" borderColor="gray.200" px={8} py={16} mb={12}>
             {children}
         </Flex>
     )
