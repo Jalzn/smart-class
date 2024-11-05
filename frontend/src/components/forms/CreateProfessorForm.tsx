@@ -8,6 +8,8 @@ import { Field } from "../ui/field"
 import { Button } from "../ui/button"
 import { FormEvent, useState } from "react"
 import { SelectContent, SelectLabel, SelectRoot, SelectTrigger, SelectValueText } from "../ui/select"
+import { Avatar } from "../ui/avatar"
+import { FormState } from "@/types"
 
 type FormValue = {
     name: string,
@@ -20,7 +22,9 @@ export default function CreateProfessorForm({ onSuccess }: { onSuccess: () => vo
         subjectCodes: []
     })
 
-    const [state, action] = useFormState(registerTeacherAction, {
+    const [subject, setSuject] = useState("")
+
+    const [state, setState] = useState<FormState>({
         message: "",
         errors: {},
         status: "PENDING"
@@ -51,11 +55,13 @@ export default function CreateProfessorForm({ onSuccess }: { onSuccess: () => vo
         formData.set('name', value.name)
         formData.set('subjectCodes', JSON.stringify(value.subjectCodes))
 
-        try {
-            await action(formData)
+        const { message, errors, status } = await registerTeacherAction(state, formData)
+
+        if (status == "OK") {
             onSuccess()
-        } catch (e) {
-            console.log(e)
+        }
+        else {
+            setState({ message, errors, status })
         }
     }
 
@@ -65,34 +71,39 @@ export default function CreateProfessorForm({ onSuccess }: { onSuccess: () => vo
                 {state.message && (
                     <Alert colorPalette="red" title={state.message} />
                 )}
-                <Field label="Nome">
-                    <Input placeholder="Digite o nome do professor" name="name" onChange={(e) => setValue({ ...value, name: e.target.value })} />
-                </Field>
+                <HStack w="full" gap={8}>
+                    <Avatar size="xl" />
+                    <Field label="Nome">
+                        <Input placeholder="Digite o nome do professor" name="name" onChange={(e) => setValue({ ...value, name: e.target.value })} />
+                    </Field>
+                </HStack>
                 <Flex align="start" w="full" direction="column">
 
-                    <Text mb={2}>Materias</Text>
+                    <Text mb={2} fontSize="lg">Materias</Text>
                     <HStack>
-                        {value.subjectCodes.map(s => (
-                            <Badge colorPalette="blue">{subjects.items.find(i => i.value === s)?.label}</Badge>
+                        {value.subjectCodes.map((s, index) => (
+                            <Badge colorPalette="blue" key={index}>{subjects.items.find(i => i.value === s)?.label}</Badge>
                         ))}
                     </HStack>
                 </Flex>
-                <SelectRoot
-                    collection={subjects}
-                    onValueChange={(e) => setValue({ ...value, subjectCodes: [...value.subjectCodes, e.value[0]] })}
-                >
-                    <SelectLabel>Adicionar matéria</SelectLabel>
-                    <SelectTrigger>
-                        <SelectValueText placeholder="Escolha a matéria responsavel pelo professor" />
-                    </SelectTrigger>
-                    <SelectContent portalled={false}>
-                        {subjects.items.map(subject => (
-                            <SelectItem item={subject} key={subject.value}>
-                                {subject.label}
-                            </SelectItem>
-                        ))}
-                    </SelectContent>
-                </SelectRoot>
+                <HStack align="stretch" w="full">
+                    <SelectRoot
+                        collection={subjects}
+                        onValueChange={(e) => setSuject(e.value[0])}
+                    >
+                        <SelectTrigger>
+                            <SelectValueText placeholder="Escolha a matéria responsavel pelo professor" />
+                        </SelectTrigger>
+                        <SelectContent portalled={false}>
+                            {subjects.items.map(subject => (
+                                <SelectItem item={subject} key={subject.value}>
+                                    {subject.label}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </SelectRoot>
+                    <Button colorPalette="cyan" onClick={() => setValue({ ...value, subjectCodes: [...value.subjectCodes, subject] })}>Adicionar</Button>
+                </HStack>
                 <Button colorPalette="teal" type="submit">Salvar</Button>
             </VStack>
         </form>
