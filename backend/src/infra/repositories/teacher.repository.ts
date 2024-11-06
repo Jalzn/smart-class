@@ -1,6 +1,7 @@
 import { Subject, Teacher } from '@/domain/entities'
 import { NotFoundError } from '@/domain/errors'
 import { ITeacherRepository } from '@/domain/repositories'
+import { SubjectCode } from '@/domain/types'
 import { PrismaClient } from '@prisma/client'
 
 export class TeacherRepository implements ITeacherRepository {
@@ -13,16 +14,16 @@ export class TeacherRepository implements ITeacherRepository {
     async findAll(): Promise<Teacher[]> {
         const teachers: Teacher[] = []
 
-        const rows = await this.client.teacher.findMany({
-            include: {
-                subjects: true
-            }
-        })
+        const teacherSchemas = await this.client.teacher.findMany()
 
-        rows.forEach((row) => {
-            const teacher = this.mapSchemaToDomain(row)
+        teacherSchemas.forEach((schema) => {
+            const teacher = this.mapSchemaToDomain(schema)
             teachers.push(teacher)
         })
+
+        for (let i = 0; i < teachers.length; i++) {
+            await this.populateSubjects(teachers[i])
+        }
 
         return teachers
     }
@@ -36,7 +37,11 @@ export class TeacherRepository implements ITeacherRepository {
             throw new NotFoundError('Teacher not found.')
         }
 
-        return this.mapSchemaToDomain(row)
+        const teacher = this.mapSchemaToDomain(row)
+
+        await this.populateSubjects(teacher)
+
+        return teacher
     }
 
     async create(teacher: Teacher): Promise<void> {
@@ -49,19 +54,12 @@ export class TeacherRepository implements ITeacherRepository {
             },
         })
 
-        const subjects = teacher.subjects.map(s => ({
-            id: s.id,
-            code: s.code,
-            name: s.name,
-            teacherId: teacher.id,
-            createdAt: new Date(),
-            updatedAt: new Date()
-        }))
-
-        await this.client.subject.createMany({
-            data: subjects
+        await this.client.teacherSubject.createMany({
+            data: teacher.subjects.map(s => ({
+                teacherId: teacher.id,
+                subjectCode: s.code
+            }))
         })
-
     }
 
     async update(teacher: Teacher, data: Partial<Teacher>): Promise<void> {
@@ -74,7 +72,16 @@ export class TeacherRepository implements ITeacherRepository {
     }
 
     async deleteById(id: string): Promise<void> {
-        await this.client.subject.deleteMany({
+        await this.client.classroomQuadroTeacherMateria.updateMany({
+            where: {
+                teacherId: id
+            },
+            data: {
+                teacherId: null
+            }
+        })
+
+        await this.client.teacherSubject.deleteMany({
             where: {
                 teacherId: id
             }
@@ -86,12 +93,24 @@ export class TeacherRepository implements ITeacherRepository {
     }
 
     private mapSchemaToDomain(row: any): Teacher {
-        const subjects = row.subjects.map(s => Subject.with(s))
-
         return Teacher.with({
             id: row.id,
             name: row.name,
-            subjects: subjects
+            subjects: []
         })
+    }
+
+    private async populateSubjects(teacher: Teacher) {
+        const teacherSubjectSchemas = await this.client.teacherSubject.findMany({
+            where: {
+                teacherId: teacher.id
+            }
+        })
+
+        teacherSubjectSchemas.forEach(({ subjectCode }) => {
+            teacher.subjects.push(Subject.create(subjectCode as SubjectCode))
+        })
+
+        return teacher
     }
 }

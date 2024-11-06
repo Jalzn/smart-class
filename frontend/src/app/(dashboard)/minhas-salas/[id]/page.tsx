@@ -1,5 +1,6 @@
 import { HeaderPage, HeaderPageTitle } from "@/components/HeaderPage"
-import { Container } from "@chakra-ui/react"
+import QuadroProfessorMateria from "@/components/QuadroProfessorMateria"
+import { Container, Heading, Text } from "@chakra-ui/react"
 
 export default async function ({ params }: { params: Promise<{ id: string }> }) {
     const id = (await params).id
@@ -18,14 +19,21 @@ export default async function ({ params }: { params: Promise<{ id: string }> }) 
         return null
     }
 
+    if (!classroom) {
+        return <p>Failed to fecth classroom</p>
+    }
+
+    if (!classroom.quadroTeacherSubject) {
+        return <p>Failed to fecth classroom</p>
+    }
+
     return (
         <>
             <HeaderPage>
-                <HeaderPageTitle>Minhas Salas / {classroom?.name} </HeaderPageTitle>
+                <HeaderPageTitle>Minhas Salas / {classroom.name} </HeaderPageTitle>
             </HeaderPage>
             <Container>
-
-                <p>Hello sala {classroom?.id}</p>
+                <QuadroProfessorMateria quadroProfessorMateria={classroom.quadroTeacherSubject} />
             </Container>
         </>
     )

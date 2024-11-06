@@ -93,7 +93,8 @@ export class API {
 
     private registerClassroomController() {
         const classroomController = new ClassroomController(
-            this.repositories['ClassroomRepository']
+            this.repositories['ClassroomRepository'],
+            this.repositories['TeacherRepository']
         )
 
         const router = express.Router()
@@ -108,6 +109,10 @@ export class API {
 
         router.post('/', (req, res, next) =>
             classroomController.create(req, res, next)
+        )
+
+        router.post('/:classroomId/assign-teacher', (req, res, next) =>
+            classroomController.assignTeacherSubject(req, res, next)
         )
 
         this.http.use('/classrooms', router)

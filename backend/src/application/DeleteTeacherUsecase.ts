@@ -1,4 +1,4 @@
-import { ValidationError } from "@/domain/errors";
+import { NotFoundError, ValidationError } from "@/domain/errors";
 import { ITeacherRepository } from "@/domain/repositories";
 
 export class DeleteTeacherUsecase {
@@ -11,6 +11,12 @@ export class DeleteTeacherUsecase {
     async execute(teacherId: string) {
         if (!teacherId) {
             throw new ValidationError("Teachers id is missing.")
+        }
+
+        const teacher = this.teacherRepository.findById(teacherId)
+
+        if (!teacher) {
+            throw new NotFoundError("Teacher not found.")
         }
 
         await this.teacherRepository.deleteById(teacherId)

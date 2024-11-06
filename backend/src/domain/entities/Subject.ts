@@ -1,14 +1,11 @@
 import { SubjectCode, SubjectName } from '../types'
-import Teacher from './Teacher'
 
 type ISubjectProps = {
-    id: string
     code: string
     name: string
 }
 
 export default class Subject implements ISubjectProps {
-    public id: string
     public code: string
     public name: string
 
@@ -27,21 +24,23 @@ export default class Subject implements ISubjectProps {
         "BIO": "Biologia"
     }
 
-    private constructor({ id, code, name }: ISubjectProps) {
-        this.id = id
+    private constructor({ code, name }: ISubjectProps) {
         this.code = code
         this.name = name
+    }
+
+    static getDefaultSubjects() {
+        return this.subjectMap
     }
 
     private static getSubjectNameByCode(code: SubjectCode): SubjectName {
         return Subject.subjectMap[code]
     }
 
-    public static create(code: SubjectCode, teacher: Teacher) {
+    public static create(code: SubjectCode) {
         const name = Subject.getSubjectNameByCode(code)
 
         return new Subject({
-            id: crypto.randomUUID().toString(),
             code,
             name,
         })

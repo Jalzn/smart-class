@@ -31,7 +31,7 @@ export class RegisterTeacherUsecase {
         const teacher = Teacher.create(name)
 
         subjectCodes.forEach(subjectCode => {
-            const subject = Subject.create(subjectCode, teacher)
+            const subject = Subject.create(subjectCode)
             teacher.subjects.push(subject)
         })
 

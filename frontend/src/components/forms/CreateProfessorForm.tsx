@@ -102,7 +102,11 @@ export default function CreateProfessorForm({ onSuccess }: { onSuccess: () => vo
                             ))}
                         </SelectContent>
                     </SelectRoot>
-                    <Button colorPalette="cyan" onClick={() => setValue({ ...value, subjectCodes: [...value.subjectCodes, subject] })}>Adicionar</Button>
+                    <Button colorPalette="cyan" onClick={() => {
+                        if (subject) {
+                            setValue({ ...value, subjectCodes: [...value.subjectCodes, subject] })
+                        }
+                    }}>Adicionar</Button>
                 </HStack>
                 <Button colorPalette="teal" type="submit">Salvar</Button>
             </VStack>

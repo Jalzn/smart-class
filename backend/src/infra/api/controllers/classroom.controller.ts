@@ -2,19 +2,22 @@ import { CreateClassroomUsecase } from "@/application/CreateClassroomUsecase";
 import { ValidationError } from "@/domain/errors";
 import { NextFunction, Request, Response } from "express";
 import { ApiError } from "../errors";
-import { IClassroomRepository } from "@/domain/repositories";
+import { IClassroomRepository, ITeacherRepository } from "@/domain/repositories";
 import FindAllClassroomsUsecase from "@/application/FindAllClassroomsUsecase";
 import FindClassroomUsecase from "@/application/FindClassroomUsecase";
+import { AssignTeacherSubjectUsecase } from "@/application/AssignTeacherSubjectUsecase";
 
 export default class ClassroomController {
     private findAllClassroomsUsecase: FindAllClassroomsUsecase
     private findClassroomUsecase: FindClassroomUsecase
     private createClassroomUsecase: CreateClassroomUsecase
+    private assginTeacherSubjectUsecase: AssignTeacherSubjectUsecase
 
-    constructor(classroomRepository: IClassroomRepository) {
+    constructor(classroomRepository: IClassroomRepository, teacherRepository: ITeacherRepository) {
         this.findAllClassroomsUsecase = new FindAllClassroomsUsecase(classroomRepository)
         this.findClassroomUsecase = new FindClassroomUsecase(classroomRepository)
         this.createClassroomUsecase = new CreateClassroomUsecase(classroomRepository)
+        this.assginTeacherSubjectUsecase = new AssignTeacherSubjectUsecase(classroomRepository, teacherRepository)
     }
 
     async findAll(req: Request, res: Response, next: NextFunction) {
@@ -48,6 +51,25 @@ export default class ClassroomController {
             res.status(201).send(response)
         }
         catch (e) {
+            console.log(e)
+            if (e instanceof ValidationError) {
+                next(new ApiError(e.message, 422))
+            }
+            else {
+                next(new ApiError())
+            }
+        }
+    }
+
+    async assignTeacherSubject(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { classroomId } = req.params
+            const { teacherId, subjectCode } = req.body
+
+            const response = await this.assginTeacherSubjectUsecase.execute({ classroomId, teacherId, subjectCode })
+
+            res.status(200).send(response)
+        } catch (e) {
             console.log(e)
             if (e instanceof ValidationError) {
                 next(new ApiError(e.message, 422))
