@@ -120,6 +120,10 @@ export class API {
             classroomController.assignTeacherSubject(req, res, next)
         )
 
+        router.delete('/:classroomId', (req, res, next) =>
+            classroomController.delete(req, res, next)
+        )
+
         this.http.use('/classrooms', router)
     }
 

@@ -1,22 +1,25 @@
 import { CreateClassroomUsecase } from "@/application/CreateClassroomUsecase";
-import { ValidationError } from "@/domain/errors";
+import { NotFoundError, ValidationError } from "@/domain/errors";
 import { NextFunction, Request, Response } from "express";
 import { ApiError } from "../errors";
 import { IClassroomRepository, ITeacherRepository } from "@/domain/repositories";
 import FindAllClassroomsUsecase from "@/application/FindAllClassroomsUsecase";
 import FindClassroomUsecase from "@/application/FindClassroomUsecase";
 import { AssignTeacherSubjectUsecase } from "@/application/AssignTeacherSubjectUsecase";
+import { DeleteClassroomUsecase } from "@/application/DeleteClassroomUsecase";
 
 export default class ClassroomController {
     private findAllClassroomsUsecase: FindAllClassroomsUsecase
     private findClassroomUsecase: FindClassroomUsecase
     private createClassroomUsecase: CreateClassroomUsecase
+    private deleteClassroomUsecase: DeleteClassroomUsecase
     private assginTeacherSubjectUsecase: AssignTeacherSubjectUsecase
 
     constructor(classroomRepository: IClassroomRepository, teacherRepository: ITeacherRepository) {
         this.findAllClassroomsUsecase = new FindAllClassroomsUsecase(classroomRepository)
         this.findClassroomUsecase = new FindClassroomUsecase(classroomRepository)
         this.createClassroomUsecase = new CreateClassroomUsecase(classroomRepository)
+        this.deleteClassroomUsecase = new DeleteClassroomUsecase(classroomRepository)
         this.assginTeacherSubjectUsecase = new AssignTeacherSubjectUsecase(classroomRepository, teacherRepository)
     }
 
@@ -79,4 +82,28 @@ export default class ClassroomController {
             }
         }
     }
+
+
+    async delete(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { classroomId } = req.params
+
+            const response = await this.deleteClassroomUsecase.execute({ classroomId })
+
+            res.status(200).send(response)
+        }
+        catch (e) {
+            console.log(e)
+            if (e instanceof NotFoundError) {
+                next(new ApiError(e.message, 404))
+            }
+            else if (e instanceof ValidationError) {
+                next(new ApiError(e.message, 422))
+            }
+            else {
+                next(new ApiError())
+            }
+        }
+    }
+
 }

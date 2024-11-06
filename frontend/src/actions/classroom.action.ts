@@ -66,3 +66,27 @@ export async function alocarProfessorMateriaAction(state: FormState, formData: F
         status: "OK"
     }
 }
+
+export async function deleteClassroom(classroomId: string): Promise<FormState> {
+    const res = await fetch(`http://localhost:3333/classrooms/${classroomId}`, {
+        method: "DELETE"
+    })
+
+    if (!res.ok) {
+        const { message } = await res.json()
+
+        return {
+            message,
+            errors: {},
+            status: "FAILED"
+        }
+    }
+
+    revalidatePath('/')
+
+    return {
+        message: "",
+        errors: {},
+        status: "OK"
+    }
+}

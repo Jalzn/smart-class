@@ -1,6 +1,8 @@
+import DeleteSalaDialog from "@/components/dialogs/DeleteSalaDialog"
 import { HeaderPage, HeaderPageTitle } from "@/components/HeaderPage"
 import QuadroProfessorMateria from "@/components/QuadroProfessorMateria"
-import { Container, Heading, Text } from "@chakra-ui/react"
+import { Button } from "@/components/ui/button"
+import { Container, Flex, Heading, Text } from "@chakra-ui/react"
 
 export default async function ({ params }: { params: Promise<{ id: string }> }) {
     const id = (await params).id
@@ -33,6 +35,9 @@ export default async function ({ params }: { params: Promise<{ id: string }> }) 
                 <HeaderPageTitle>Minhas Salas / {classroom.name} </HeaderPageTitle>
             </HeaderPage>
             <Container>
+                <Flex align="end">
+                    <DeleteSalaDialog />
+                </Flex>
                 <QuadroProfessorMateria quadroProfessorMateria={classroom.quadroTeacherSubject} />
             </Container>
         </>

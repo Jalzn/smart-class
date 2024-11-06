@@ -1,8 +1,9 @@
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
 import { Box, Container } from "@chakra-ui/react";
-import { cookies } from "next/headers";
 import { ReactNode } from "react";
+
+export const dynamic = 'force-dynamic'
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
     return (

@@ -96,8 +96,16 @@ export class ClassroomRepository implements IClassroomRepository {
         })
     }
 
-    async deleteById() {
+    async deleteById(id: string) {
+        await this.client.classroomQuadroTeacherMateria.deleteMany({
+            where: {
+                classroomId: id
+            }
+        })
 
+        await this.client.classroom.delete({
+            where: { id }
+        })
     }
 
     private mapSchemaToDomain(row: any): Classroom {
