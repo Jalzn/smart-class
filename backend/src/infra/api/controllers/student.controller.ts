@@ -39,6 +39,7 @@ export class StudentController {
     async findById(req: Request, res: Response, next: NextFunction) {
         try {
             const { id } = req.params
+            console.log(id)
             const response = await this.findByIdStudentsUsecase.execute({ id })
             res.status(200).send(response)
         } catch (e) {
@@ -49,8 +50,9 @@ export class StudentController {
 
     async deleteStudent(req: Request, res: Response, next: NextFunction){
         try {
-            const { StudentId } = req.params
-            const response = await this.DeleteStudentUsecase.execute(StudentId)
+            const { id } = req.params
+            console.log(id)
+            const response = await this.DeleteStudentUsecase.execute({id})
             res.status(200).send({response})
         } 
         catch (e){

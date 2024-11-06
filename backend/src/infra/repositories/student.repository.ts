@@ -14,7 +14,9 @@ export class StudentRepository implements IStudentRepository {
 
 
     async findById(id: string) {
-        const student = await this.client.student.findFirstOrThrow({ where: { id } })
+        const student = await this.client.student.findFirstOrThrow({ 
+            where: { id },
+        })
 
         return student
     }

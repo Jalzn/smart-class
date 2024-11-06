@@ -1,6 +1,10 @@
 import { ValidationError } from "@/domain/errors";
 import { IStudentRepository } from "@/domain/repositories";
 
+type deleteStudentInputDTO = {
+    id: string
+}
+
 export class deleteStudentUsecase {
     private StudentRepository: IStudentRepository
 
@@ -8,11 +12,11 @@ export class deleteStudentUsecase {
         this.StudentRepository = StudentRepository
     }
 
-    async execute(StudentId: string) {
-        if (!StudentId) {
+    async execute({id}: deleteStudentInputDTO) {
+        if (!id) {
             throw new ValidationError("Students id is missing.")
         }
 
-        await this.StudentRepository.deleteById(StudentId)
+        await this.StudentRepository.deleteById(id)
     }
 }

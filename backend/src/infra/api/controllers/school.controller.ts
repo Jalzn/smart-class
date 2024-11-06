@@ -51,7 +51,6 @@ export class SchoolController {
     async deleteSchool(req: Request, res: Response, next: NextFunction){
         try {
             const { SchoolId } = req.params
-            console.log(SchoolId)
             const response = await this.deleteSchoolUsecase.execute({SchoolId})
             res.status(200).send({response})
         } 

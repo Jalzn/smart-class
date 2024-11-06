@@ -19,8 +19,8 @@ export class SchoolRepository implements ISchoolRepository {
     async findById (id: string) {
         const row = await this.client.school.findUnique({
             where: { id },
-            include: { // Include related data
-                teachers: true,  // Correct relationships
+            include: { 
+                teachers: true,  
                 students: true,
                 classrooms: true,
             },
