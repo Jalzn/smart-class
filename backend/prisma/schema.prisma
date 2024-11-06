@@ -1,0 +1,59 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id
+  email     String   @unique
+  password  String
+  createdAt DateTime
+  updatedAt DateTime @updatedAt
+}
+
+model Teacher {
+  id        String   @id
+  name      String
+  createdAt DateTime
+  updatedAt DateTime @updatedAt
+}
+
+// Maps a teacher to his subjects
+model TeacherSubject {
+  id          Int    @id @default(autoincrement())
+  teacherId   String
+  subjectCode String
+}
+
+model Student {
+  id        String   @id
+  name      String
+  createdAt DateTime
+  updatedAt DateTime @updatedAt
+}
+
+model Classroom {
+  id        String   @id
+  name      String
+  grade     Int
+  createdAt DateTime
+  updatedAt DateTime @updatedAt
+}
+
+model ClassroomQuadroTeacherMateria {
+  id          Int     @id @default(autoincrement())
+  classroomId String
+  teacherId   String?
+  subjectCode String
+}
