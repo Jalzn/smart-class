@@ -13,6 +13,7 @@ export class ClassroomRepository implements IClassroomRepository {
     }
 
     async findAll() {
+        // eslint-disable-next-line prefer-const
         let classrooms: Classroom[] = []
 
         const classroomSchemas = await this.client.classroom.findMany()

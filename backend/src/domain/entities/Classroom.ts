@@ -2,7 +2,6 @@ import { ValidationError } from '../errors'
 import { SubjectCode } from '../types'
 import Student from './Student'
 import Subject from './Subject'
-import Teacher from './Teacher'
 
 export type ClassroomGrade = 1 | 2 | 3
 
