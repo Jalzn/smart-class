@@ -1,12 +1,16 @@
+import CreateClassroomDialog from "@/components/dialogs/CreateClassroomDialog";
 import CreateClassroomForm from "@/components/forms/CreateClassroomForm";
 import { HeaderPage, HeaderPageTitle } from "@/components/HeaderPage";
 import { Button } from "@/components/ui/button";
 import { DialogBackdrop, DialogContent, DialogRoot, DialogTrigger } from "@/components/ui/dialog";
 import { Box, Card, Container, DialogBody, Flex, Grid, GridItem, Heading, HStack, Text, VStack } from "@chakra-ui/react";
+import { revalidatePath } from "next/cache";
 import Link from "next/link";
 import { BsFillMortarboardFill } from "react-icons/bs";
 
 export default async function MinhasSalasPage() {
+    revalidatePath('/')
+
     const classrooms: any[] = await fetchMinhasSalas()
 
     async function fetchMinhasSalas() {
@@ -27,20 +31,7 @@ export default async function MinhasSalasPage() {
             </HeaderPage>
             <Container>
                 <Flex align="end" mb={4}>
-                    <DialogRoot placement="center">
-                        <DialogBackdrop />
-                        <DialogTrigger asChild>
-                            <Button ms="auto" colorPalette="teal" size="sm">Nova Sala</Button>
-                        </DialogTrigger>
-                        <DialogContent>
-                            <DialogBody>
-                                <Box p={4}>
-                                    <Heading mb={4}>Nova Sala</Heading>
-                                    <CreateClassroomForm />
-                                </Box>
-                            </DialogBody>
-                        </DialogContent>
-                    </DialogRoot>
+                    <CreateClassroomDialog />
                 </Flex>
                 <Grid templateColumns="repeat(4, 1fr)" gap={8}>
                     {classrooms.map(c => (

@@ -3,9 +3,11 @@ import CreateProfessorDialog from "@/components/dialogs/CreateProfessorDialog";
 import { HeaderPage, HeaderPageTitle } from "@/components/HeaderPage";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Badge, Box, Container, Flex, HStack, IconButton, Table } from "@chakra-ui/react";
+import { revalidatePath } from "next/cache";
 import { BiSolidInbox, BiTrash } from "react-icons/bi";
 
 export default async function () {
+    revalidatePath('/')
     const professores: any[] = await fetchProfessores()
 
     async function fetchProfessores() {

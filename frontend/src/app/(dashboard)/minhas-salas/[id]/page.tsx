@@ -3,8 +3,11 @@ import { HeaderPage, HeaderPageTitle } from "@/components/HeaderPage"
 import QuadroProfessorMateria from "@/components/QuadroProfessorMateria"
 import { Button } from "@/components/ui/button"
 import { Container, Flex, Heading, Text } from "@chakra-ui/react"
+import { revalidatePath } from "next/cache"
 
 export default async function ({ params }: { params: Promise<{ id: string }> }) {
+    revalidatePath('/')
+
     const id = (await params).id
 
     const classroom = await fetchClassroom()

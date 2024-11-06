@@ -2,9 +2,12 @@ import CreateAlunoDialog from "@/components/dialogs/CreateAlunoDialog";
 import { HeaderPage, HeaderPageTitle } from "@/components/HeaderPage";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Box, Container, Flex, IconButton, Table } from "@chakra-ui/react";
+import { revalidatePath } from "next/cache";
 import { BiSolidInbox, BiTrash } from "react-icons/bi";
 
 export default async function () {
+    revalidatePath('/')
+
     const alunos: any[] = await fetchAlunos()
 
     async function fetchAlunos() {
