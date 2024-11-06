@@ -23,8 +23,11 @@ export class StudentRepository implements IStudentRepository {
 
     }
 
-    async deleteById() {
+    async deleteById(id: string) {
 
+        await this.client.student.delete({
+            where: { id },
+        })
     }
 
 

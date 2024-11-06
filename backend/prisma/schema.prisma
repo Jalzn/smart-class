@@ -49,7 +49,7 @@ model School {
   createdAt  DateTime
   updatedAt  DateTime    @updatedAt
 
-  Principal Principal[]
+  Principal Principal?
 }
 
 model Classroom {
@@ -76,11 +76,11 @@ model Subject {
 }
 
  model Principal {
-  id        Int      @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   name      String
-  email     String   @unique
+  email     String    @unique
   password  String 
   school    School?   @relation(fields: [schoolid], references: [id])
-  schoolid String?
+  schoolid  String?   @unique
   schoolId  Int?    
 }

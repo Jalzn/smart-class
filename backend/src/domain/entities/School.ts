@@ -3,15 +3,23 @@ import Classroom from './Classroom'
 import Student from './Student'
 import Teacher from './Teacher'
 
+type ISchoolProps = {
+    id: string
+    teachers: []
+    students: [],
+    classrooms: []
+}
 export default class School {
     private teachers: Teacher[]
     private students: Student[]
     private classrooms: Classroom[]
+    public id: string
 
-    constructor() {
+    constructor({id}: ISchoolProps ) {
         this.teachers = []
         this.students = []
         this.classrooms = []
+        this.id = id
     }
 
     registerTeacher(teacher: Teacher) {
@@ -36,5 +44,19 @@ export default class School {
         }
 
         this.classrooms.push(classroom)
+    }
+
+
+    public static create() {
+        return new School({
+            id: crypto.randomUUID().toString(),
+            teachers: [],
+            students: [],
+            classrooms: []
+        })
+    }
+
+    public static with(props: ISchoolProps) {
+        return new School(props)
     }
 }

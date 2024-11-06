@@ -23,8 +23,6 @@ export class CreateStudentUsecase {
         if (!name) {
             throw new ValidationError("Name is missing")
         }
-
-
         const student = Student.create(name)
 
         await this.studentRepository.create(student)
