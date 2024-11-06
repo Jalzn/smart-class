@@ -12,13 +12,19 @@ export class StudentRepository implements IStudentRepository {
         this.client = client
     }
 
+    async findAll() {
+        const students = await this.client.student.findMany()
+
+        return students
+    }
+
 
     async findById(id: string) {
         const student = await this.client.student.findFirstOrThrow({ where: { id } })
 
         return student
     }
-    
+
     async update() {
 
     }
