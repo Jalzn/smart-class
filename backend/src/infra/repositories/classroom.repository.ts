@@ -1,4 +1,4 @@
-import { Classroom, Subject, Teacher } from "@/domain/entities";
+import { Classroom } from "@/domain/entities";
 import { ClassroomGrade } from "@/domain/entities/Classroom";
 import { IClassroomRepository } from "@/domain/repositories";
 import { PrismaClient } from '@prisma/client'
@@ -12,6 +12,7 @@ export class ClassroomRepository implements IClassroomRepository {
     }
 
     async findAll() {
+        // eslint-disable-next-line prefer-const
         let classrooms: Classroom[] = []
 
         const rows = await this.client.classroom.findMany({
