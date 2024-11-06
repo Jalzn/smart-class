@@ -12,6 +12,8 @@ import { AuthMiddleware } from './middlewares/auth.middleware'
 import ClassroomController from './controllers/classroom.controller'
 import { ClassroomRepository } from '../repositories/classroom.repository'
 import { TeachersController } from './controllers/teachers.controller'
+import { StudentController } from './controllers/student.controller'
+import { StudentRepository } from '../repositories/student.repository'
 
 export class API {
     private http: Express
@@ -42,6 +44,7 @@ export class API {
         this.registerAuthController()
         this.registerClassroomController()
         this.registerTeacherController()
+        this.registerStudentController()
 
         this.setupErrorHandler()
     }
@@ -58,6 +61,7 @@ export class API {
             this.database
         )
         this.repositories['ClassroomRepository'] = new ClassroomRepository(this.database)
+        this.repositories['StudentRepository'] = new StudentRepository(this.database)
     }
 
     private registerServices() {
@@ -139,6 +143,24 @@ export class API {
         )
 
         this.http.use('/teachers', router)
+    }
+
+    private registerStudentController() {
+        const studentController = new StudentController(
+            this.repositories['StudentRepository']
+        )
+
+        const router = express.Router()
+
+        router.get('/', (req, res, next) =>
+            studentController.findAll(req, res, next)
+        )
+
+        router.post('/', (req, res, next) =>
+            studentController.create(req, res, next)
+        )
+
+        this.http.use('/students', router)
     }
 
 

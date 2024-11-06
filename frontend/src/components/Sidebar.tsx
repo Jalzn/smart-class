@@ -40,6 +40,11 @@ export default function Sidebar() {
                     <Text fontWeight="bold">Professores</Text>
                 </Link>
             </Button>
+            <Button asChild variant={getVariant('/alunos')} w="full" colorPalette={getPallete('/alunos')}>
+                <Link href="/alunos">
+                    <Text fontWeight="bold">Alunos</Text>
+                </Link>
+            </Button>
         </VStack>
     )
 }
