@@ -2,7 +2,7 @@ import { Classroom, Subject, Teacher } from "@/domain/entities";
 import { ClassroomGrade } from "@/domain/entities/Classroom";
 import { IClassroomRepository } from "@/domain/repositories";
 import { SubjectCode } from "@/domain/types";
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient} from '../../../.prisma/client';
 
 
 export class ClassroomRepository implements IClassroomRepository {
@@ -117,7 +117,7 @@ export class ClassroomRepository implements IClassroomRepository {
             let t: Teacher | null = null
 
             if (quadroTeacherSubject[j].teacherId) {
-                const row = await this.client.teacher.findUniqueOrThrow({ where: { id: quadroTeacherSubject[j].teacherId } })
+                const row = await this.client.teacher.findUniqueOrThrow({ where: { id: quadroTeacherSubject[j].teacherId || ''} })
 
                 t = Teacher.with({
                     id: row.id,

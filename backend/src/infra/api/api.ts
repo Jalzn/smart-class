@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '../../../.prisma/client'
 import express, { Express, NextFunction, Request, Response } from 'express'
 import config from '../config'
 import { prisma } from '../database'

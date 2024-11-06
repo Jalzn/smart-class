@@ -1,18 +1,18 @@
 services:
-    smartclass:
-        build:
-            context: .
-        environment:
-            PORT: ${PORT}
-        ports:
-            - '${PORT}:${PORT}'
-        networks:
-            - postgres
-        develop:
-            watch:
-                - action: rebuild
-                  path: .
-                  target: /usr/src/app
+    # smartclass:
+    #     build:
+    #         context: .
+    #     environment:
+    #         PORT: ${PORT}
+    #     ports:
+    #         - '${PORT}:${PORT}'
+    #     networks:
+    #         - postgres
+    #     develop:
+    #         watch:
+    #             - action: rebuild
+    #               path: .
+    #               target: /usr/src/app
 
     postgres:
         image: postgres

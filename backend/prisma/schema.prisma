@@ -5,8 +5,9 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
-  output   = "../node_modules/.prisma/client"
+  provider      = "prisma-client-js"
+  output        = "../.prisma/client"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
 }
 
 datasource db {
@@ -27,6 +28,8 @@ model Teacher {
   name      String
   createdAt DateTime
   updatedAt DateTime @updatedAt
+  School    School?  @relation(fields: [schoolId], references: [id])
+  schoolId  String?
 }
 
 // Maps a teacher to his subjects
@@ -41,10 +44,10 @@ model Student {
   name      String
   createdAt DateTime
   updatedAt DateTime @updatedAt
+  School    School?  @relation(fields: [schoolId], references: [id])
+  schoolId  String?
 }
 
-<<<<<<< HEAD
-=======
 model School {
   id         String      @id
   teachers   Teacher[]
@@ -56,13 +59,14 @@ model School {
   Principal Principal[]
 }
 
->>>>>>> CRUD_student
 model Classroom {
   id        String   @id
   name      String
   grade     Int
   createdAt DateTime
   updatedAt DateTime @updatedAt
+  School    School?  @relation(fields: [schoolId], references: [id])
+  schoolId  String?
 }
 
 model ClassroomQuadroTeacherMateria {
@@ -72,12 +76,12 @@ model ClassroomQuadroTeacherMateria {
   subjectCode String
 }
 
- model Principal {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String   @unique
-  password  String 
-  school    School?   @relation(fields: [schoolid], references: [id])
+model Principal {
+  id       Int     @id @default(autoincrement())
+  name     String
+  email    String  @unique
+  password String
+  school   School? @relation(fields: [schoolid], references: [id])
   schoolid String?
-  schoolId  Int?    
+  schoolId Int?
 }
