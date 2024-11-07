@@ -16,7 +16,7 @@ export default function AlunosPage() {
         fetchAlunos().then((data)=>{
             setAlunos(data)
         });
-    },[close, alunos]);
+    },[close]);
 
     async function fetchAlunos() {
         const res = await fetch(API_URL + '/students', {mode:'cors'})       

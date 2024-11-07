@@ -7,7 +7,7 @@ import CreateProfessorForm from "../forms/CreateProfessorForm";
 import { useState } from "react";
 
 export default function CreateProfessorDialog({ onClose }: { onClose: () => void }) {
-    const [open, setOpen] = useState(false)
+    const [open, setOpen] = useState(false)   
 
     return (
         <DialogRoot placement="center" open={open} onOpenChange={(s) => setOpen(s.open)}>
@@ -19,7 +19,7 @@ export default function CreateProfessorDialog({ onClose }: { onClose: () => void
                 <DialogBody>
                     <Box p={2}>
                         <Heading mb={4}>Novo Professor</Heading>
-                        <CreateProfessorForm onSuccess={() => setOpen(false)} />
+                        <CreateProfessorForm onSuccess={() => {setOpen(false); onClose()}} />
                     </Box>
                 </DialogBody>
             </DialogContent>

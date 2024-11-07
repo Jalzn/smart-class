@@ -19,7 +19,7 @@ export default function CreateAlunoDialog({ onClose }: { onClose: () => void }) 
                 <DialogBody>
                     <Box p={2}>
                         <Heading mb={4}>Novo Aluno</Heading>
-                        <CreateAlunoForm onSuccess={() => setOpen(false)} />
+                        <CreateAlunoForm onSuccess={() => {setOpen(false); onClose()}} />
                     </Box>
                 </DialogBody>
             </DialogContent>

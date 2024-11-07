@@ -19,7 +19,7 @@ export default function ProfessoresPage() {
         fetchProfessores().then((data)=>{
             setProfessores(data)
         });
-    },[close, professores]);
+    },[close]);
 
     async function fetchProfessores() {
         const res = await fetch(API_URL + '/teachers', {mode:'cors'})       
@@ -55,7 +55,7 @@ export default function ProfessoresPage() {
                                     <Table.Row>
                                         <Table.ColumnHeader>Nome</Table.ColumnHeader>
                                         <Table.ColumnHeader>Especialidades</Table.ColumnHeader>
-                                        <Table.ColumnHeader>Acoes</Table.ColumnHeader>
+                                        <Table.ColumnHeader>Ações</Table.ColumnHeader>
                                     </Table.Row>
                                 </Table.Header>
                                 <Table.Body>
