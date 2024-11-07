@@ -74,4 +74,4 @@ Historia #4: Como professor, eu gostaria de me cadastrar nas escolas em que dou 
 
 ![classDiagram](docs/classDiagram.png)
 
-![sequential](docs/sequential.png)
+![sequentialDiagram](docs/sequentialDiagram.png)
