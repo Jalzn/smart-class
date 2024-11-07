@@ -3,14 +3,14 @@ import { ReactNode } from "react";
 
 export function HeaderPage({ children }: { children: ReactNode }) {
     return (
-        <Flex alignItems="center" bgGradient="to-tr" gradientFrom="cyan.600" gradientTo="cyan.400" borderBottom="sm" borderColor="gray.200" px={8} py={16} mb={12}>
+        <Flex alignItems="center" bgGradient="to-tr" gradientFrom="gray.50" gradientTo="gray.200" borderBottom="sm" borderColor="gray.200" px={8} py={16} mb={12}>
             {children}
         </Flex>
     )
 }
 
 export function HeaderPageTitle({ children }: { children: ReactNode }) {
-    return <Heading fontSize="3xl" color="gray.800">{children}</Heading>
+    return <Heading fontSize="3xl" color="cyan.800">{children}</Heading>
 }
 
 export function HeaderPageRight({ children }: { children: ReactNode }) {

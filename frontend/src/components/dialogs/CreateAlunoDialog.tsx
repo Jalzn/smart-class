@@ -13,7 +13,7 @@ export default function CreateAlunoDialog({ onClose }: { onClose: () => void }) 
         <DialogRoot placement="center" open={open} onOpenChange={(s) => setOpen(s.open)}>
             <DialogBackdrop />
             <DialogTrigger asChild>
-                <Button ms="auto" size="sm" colorPalette="teal">Novo Aluno</Button>
+                <Button ms="auto" size="sm" colorPalette="cyan">Novo Aluno</Button>
             </DialogTrigger>
             <DialogContent>
                 <DialogBody>

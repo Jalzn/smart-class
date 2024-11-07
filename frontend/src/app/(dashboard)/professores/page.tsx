@@ -53,9 +53,9 @@ export default function ProfessoresPage() {
                             <Table.Root>
                                 <Table.Header>
                                     <Table.Row>
-                                        <Table.ColumnHeader>Nome</Table.ColumnHeader>
-                                        <Table.ColumnHeader>Especialidades</Table.ColumnHeader>
-                                        <Table.ColumnHeader>Ações</Table.ColumnHeader>
+                                        <Table.ColumnHeader color="cyan.800" fontSize={18}>Nome</Table.ColumnHeader>
+                                        <Table.ColumnHeader color="cyan.800" fontSize={18}>Especialidades</Table.ColumnHeader>
+                                        <Table.ColumnHeader color="cyan.800" fontSize={18}>Ações</Table.ColumnHeader>
                                     </Table.Row>
                                 </Table.Header>
                                 <Table.Body>

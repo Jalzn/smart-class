@@ -1,4 +1,4 @@
-import Logo from '@/assets/logo.png'
+import Logo from '@/assets/light-logo.svg'
 import { Flex, Text } from "@chakra-ui/react";
 import { cookies } from "next/headers";
 import Image from 'next/image';
@@ -21,14 +21,14 @@ export default function Navbar() {
     const user = getUserFromCookies()
 
     return (
-        <Flex shadow="md" p={4} h={16} alignItems="center" background="cyan.800" color="white">
+        <Flex shadow="md" p={4} h={16} alignItems="center" background="blue.100" color="white">
             <Flex gap={2}>
-                <Image alt='Logo' src={Logo} width={32} height={32} />
-                <Text fontSize="xl">SmartClass</Text>
+                <Image alt='Logo' src={Logo} width={180} height={32} />
+                
             </Flex>
             <Flex ms="auto" alignItems="center" gap={4}>
-                <Avatar />
-                <Text>{user.email}</Text>
+                <Avatar color="white" bg="cyan.900" />
+                <Text color="cyan.900">{user.email}</Text>
                 <NavbarMenu />
             </Flex>
         </Flex>

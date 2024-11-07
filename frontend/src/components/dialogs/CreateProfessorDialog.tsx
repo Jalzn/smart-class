@@ -13,7 +13,7 @@ export default function CreateProfessorDialog({ onClose }: { onClose: () => void
         <DialogRoot placement="center" open={open} onOpenChange={(s) => setOpen(s.open)}>
             <DialogBackdrop />
             <DialogTrigger asChild>
-                <Button ms="auto" size="sm" colorPalette="teal">Novo Professor</Button>
+                <Button ms="auto" size="sm" colorPalette="cyan">Novo Professor</Button>
             </DialogTrigger>
             <DialogContent>
                 <DialogBody>

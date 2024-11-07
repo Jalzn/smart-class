@@ -1,7 +1,7 @@
 'use client'
 
 import { Flex, Input, Text, VStack } from '@chakra-ui/react'
-import Logo from '@/assets/logo.png'
+import Logo from '@/assets/light-logo.svg'
 import { Button } from "@/components/ui/button"
 import Image from 'next/image';
 import { useFormState } from 'react-dom';
@@ -18,15 +18,14 @@ export default function LoginForm() {
         < form action={formAction} >
             <VStack w="80" align="stretch" gap={6}>
                 <Flex justifyContent="center">
-                    <Image alt="Logo" src={Logo} width={42} height={42} />
-                    <Text ms={2} fontSize="3xl" color="gray.600">SmartClass</Text>
+                    <Image alt="Logo" src={Logo} width={300} height={42} />                    
                 </Flex>
                 {state.message && (
                     <Alert colorPalette="red" title={state.message} />
                 )}
                 <Input name="email" placeholder="Email" />
                 <Input name="password" type="password" placeholder="Senha" />
-                <Button colorPalette="green" type="submit">Login</Button>
+                <Button colorPalette="cyan" type="submit">Login</Button>
             </VStack>
         </form >
     )
