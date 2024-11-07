@@ -8,26 +8,19 @@ import { BiSolidInbox, BiTrash } from "react-icons/bi";
 import { API_URL } from "@/utils";
 import { useEffect, useState } from "react";
 
-<<<<<<< HEAD
-export default async function () {
-    revalidatePath('/')
-
-    const alunos: any[] = await fetchAlunos()
-=======
 export default function AlunosPage() {
-    
-    const [alunos, setAlunos] = useState([{id:'', name:'', subjects:[]}])
-    const [close, setClose] = useState(true)  
 
-    useEffect(()=>{
-        fetchAlunos().then((data)=>{
+    const [alunos, setAlunos] = useState([{ id: '', name: '', subjects: [] }])
+    const [close, setClose] = useState(true)
+
+    useEffect(() => {
+        fetchAlunos().then((data) => {
             setAlunos(data)
         });
-    },[close]);
->>>>>>> a51aa73a63fa895da4989e131cfeecc234a28103
+    }, [close]);
 
     async function fetchAlunos() {
-        const res = await fetch(API_URL + '/students', {mode:'cors'})       
+        const res = await fetch(API_URL + '/students', { mode: 'cors' })
 
         if (res.ok) {
             const { students } = await res.json()
@@ -35,7 +28,7 @@ export default function AlunosPage() {
         }
 
         return []
-    }      
+    }
 
     return (
         <>
