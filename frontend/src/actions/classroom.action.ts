@@ -90,3 +90,15 @@ export async function deleteClassroom(classroomId: string): Promise<FormState> {
         status: "OK"
     }
 }
+
+export async function generateHorarios() {
+    const res = await fetch('http://localhost:3333/classrooms/generate-horarios', {
+        method: "POST"
+    })
+
+    if (!res.ok) {
+        throw new Error("Failed to generate horarios")
+    }
+
+    revalidatePath('/')
+}

@@ -10,7 +10,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         <Box>
             <Navbar />
             <Sidebar />
-            <Box ms={64}>
+            <Box ms={64} mt={16} pb={16}>
                 {children}
             </Box>
         </Box>
