@@ -1,5 +1,6 @@
 import { Classroom, Subject, Teacher } from "@/domain/entities";
 import { ClassroomGrade } from "@/domain/entities/Classroom";
+import Horario from "@/domain/entities/Horario";
 import { IClassroomRepository } from "@/domain/repositories";
 import { SubjectCode } from "@/domain/types";
 import { PrismaClient } from '@prisma/client'
@@ -23,7 +24,8 @@ export class ClassroomRepository implements IClassroomRepository {
                 ...schema,
                 students: [],
                 grade: schema.grade as ClassroomGrade,
-                quadroTeacherSubject: []
+                quadroTeacherSubject: [],
+                horarios: []
             })
 
             classrooms.push(classroom)
@@ -31,6 +33,7 @@ export class ClassroomRepository implements IClassroomRepository {
 
         for (let i = 0; i < classrooms.length; i++) {
             classrooms[i] = await this.populateQuadroTeacherSubject(classrooms[i])
+            classrooms[i] = await this.populateHorarios(classrooms[i])
         }
 
         return classrooms
@@ -43,10 +46,12 @@ export class ClassroomRepository implements IClassroomRepository {
             ...schema,
             students: [],
             grade: schema.grade as ClassroomGrade,
-            quadroTeacherSubject: []
+            quadroTeacherSubject: [],
+            horarios: []
         })
 
         classroom = await this.populateQuadroTeacherSubject(classroom)
+        classroom = await this.populateHorarios(classroom)
 
         return classroom
     }
@@ -85,6 +90,29 @@ export class ClassroomRepository implements IClassroomRepository {
                         }
                     })
                 }
+            })
+        }
+
+        if (classroom.horarios) {
+            classroom.horarios.forEach(async (horario) => {
+                const hasHorarios = await this.client.classroomHorario.findFirst({
+                    where: { classroomId: classroom.id ?? "" }
+                })
+
+                if (hasHorarios) {
+                    await this.client.classroomHorario.deleteMany({
+                        where: { classroomId: classroom.id ?? "" }
+                    })
+                }
+
+                await this.client.classroomHorario.create({
+                    data: {
+                        classroomId: classroom.id ?? "",
+                        subjectCode: horario.subjectCode as string,
+                        dayInWeek: horario.dayInWeek,
+                        hour: horario.hour
+                    }
+                })
             })
         }
 
@@ -139,6 +167,41 @@ export class ClassroomRepository implements IClassroomRepository {
             classroom.quadroTeacherSubject.push([t, s])
         }
 
+        return classroom
+    }
+
+    private async populateHorarios(classroom: Classroom) {
+        const horarioSchemas = await this.client.classroomHorario.findMany({
+            where: {
+                classroomId: classroom.id
+            }
+        })
+
+        const horarios: Horario[] = horarioSchemas.map(horario => {
+            return Horario.create(horario.subjectCode as SubjectCode, horario.dayInWeek, horario.hour)
+        })
+
+        horarios.sort((h1, h2) => {
+            if (h1.dayInWeek < h2.dayInWeek) {
+                return -1
+            }
+            else if (h1.dayInWeek > h2.dayInWeek) {
+                return 1
+            }
+            else {
+                if (h1.hour < h2.hour) {
+                    return -1
+                }
+                if (h1.hour > h2.hour) {
+                    return 1
+                }
+                else {
+                    return 0
+                }
+            }
+        })
+
+        classroom.horarios = horarios
         return classroom
     }
 }

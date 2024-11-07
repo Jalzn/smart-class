@@ -43,20 +43,6 @@ model Student {
   updatedAt DateTime @updatedAt
 }
 
-<<<<<<< HEAD
-=======
-model School {
-  id         String      @id
-  teachers   Teacher[]
-  students   Student[]
-  classrooms Classroom[]
-  createdAt  DateTime
-  updatedAt  DateTime    @updatedAt
-
-  Principal Principal[]
-}
-
->>>>>>> CRUD_student
 model Classroom {
   id        String   @id
   name      String
@@ -72,12 +58,10 @@ model ClassroomQuadroTeacherMateria {
   subjectCode String
 }
 
- model Principal {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String   @unique
-  password  String 
-  school    School?   @relation(fields: [schoolid], references: [id])
-  schoolid String?
-  schoolId  Int?    
+model ClassroomHorario {
+  id          Int    @id @default(autoincrement())
+  classroomId String
+  subjectCode String
+  dayInWeek   Int
+  hour        Int
 }

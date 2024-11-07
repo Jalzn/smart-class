@@ -7,6 +7,7 @@ import FindAllClassroomsUsecase from "@/application/FindAllClassroomsUsecase";
 import FindClassroomUsecase from "@/application/FindClassroomUsecase";
 import { AssignTeacherSubjectUsecase } from "@/application/AssignTeacherSubjectUsecase";
 import { DeleteClassroomUsecase } from "@/application/DeleteClassroomUsecase";
+import { GenerateDummyHorariosUsecase } from "@/application/GenerateDummyHorariosUsecase";
 
 export default class ClassroomController {
     private findAllClassroomsUsecase: FindAllClassroomsUsecase
@@ -14,6 +15,7 @@ export default class ClassroomController {
     private createClassroomUsecase: CreateClassroomUsecase
     private deleteClassroomUsecase: DeleteClassroomUsecase
     private assginTeacherSubjectUsecase: AssignTeacherSubjectUsecase
+    private generateDummyHorarios: GenerateDummyHorariosUsecase
 
     constructor(classroomRepository: IClassroomRepository, teacherRepository: ITeacherRepository) {
         this.findAllClassroomsUsecase = new FindAllClassroomsUsecase(classroomRepository)
@@ -21,6 +23,7 @@ export default class ClassroomController {
         this.createClassroomUsecase = new CreateClassroomUsecase(classroomRepository)
         this.deleteClassroomUsecase = new DeleteClassroomUsecase(classroomRepository)
         this.assginTeacherSubjectUsecase = new AssignTeacherSubjectUsecase(classroomRepository, teacherRepository)
+        this.generateDummyHorarios = new GenerateDummyHorariosUsecase(classroomRepository)
     }
 
     async findAll(req: Request, res: Response, next: NextFunction) {
@@ -80,6 +83,16 @@ export default class ClassroomController {
             else {
                 next(new ApiError())
             }
+        }
+    }
+
+    async generateHorarios(req: Request, res: Response, next: NextFunction) {
+        try {
+            const response = await this.generateDummyHorarios.execute()
+            res.status(200).send(response)
+        } catch (e) {
+            console.log(e)
+            next(new ApiError())
         }
     }
 
