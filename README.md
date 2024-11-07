@@ -48,33 +48,30 @@ escolar.
  
  ## Backlog da sprint
 
-História #1: Como diretor, eu gostaria de cadastrar minha escola no sistema.
-- Instalar as dependencias do projeto.
-- Criar as tabelas iniciais.
-- Implementar as operações de CRUD de usuarios.
-- Criar a tela de login para o usuario.
-- Implementar sistema de autenticação.
+História #1: Como diretor, eu gostaria de gerenciar a criação e a divisão de turmas.
 - Implementar as operações de CRUD de diretores.
 - Criar a tela de registro de diretores.
 - Criar a tela inicial para diretores.
 - Implementar as operações de CRUD de escolas.
 - Criar a tela de registro de escola.
 
-Historia #2: Como aluno, eu gostaria de me cadastrar na escola em que estudo.
-- Criar a tabela de alunos.
-- Implementar as operações de CRUD de aluno.
-- Criar a tela de registro de aluno.
-- Criar a tela inicial para alunos.
+Historia #2: Como diretor, eu gostaria de gerar automaticamente o quadro de horários de toda a escola.
+- Criar a tabela de horarios.
+- Implementar as operações gerar quadro de horarios.
+- Criar a tela de quadro de horarios.
 
-Historia #3: Como professor, eu gostaria de me cadastrar nas escolas em que dou aula.
-- Criar a tabela de professores.
+Historia #3: Como diretor, eu gostaria de alocar professores de acordo com suas áreas de especialidade para cada disciplina.
 - Implementar as operações de CRUD de professores.
 - Criar a tela de registro de professor.
 - Criar a tela inicial para professores.
-
-Historia #4: Como diretor, eu gostaria de adicionar novas disciplinas ao currículo da escola.
 - Criar a tabela de disciplinas
 - Implementar as operações de CRUD de discplinas.
-- Criar autorização baseada em cargo do usuario.
-- Adicionar autorização para somente diretores criarem discplinas.
-- Implementar o formulario de crição de discplina.
+
+Historia #4: Como professor, eu gostaria de me cadastrar nas escolas em que dou aula.
+- Criar a tabela de professores.
+- Implementar as operações de CRUD de discplinas.
+- Criar a tela inicial para professores.
+
+![classDiagram](docs/classDiagram.png)
+
+![sequential](docs/sequential.png)
