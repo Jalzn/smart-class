@@ -14,7 +14,7 @@ export class deletePrincipalUsecase {
 
     async execute({id}: deletePrincipalInputDTO) {
         if (!id) {
-            throw new ValidationError("Principal id is missing.")
+            throw new ValidationError("id is missing.")
         }
 
         await this.PrincipalRepository.deleteById(id)
