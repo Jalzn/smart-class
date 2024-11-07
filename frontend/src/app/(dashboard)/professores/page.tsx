@@ -4,6 +4,7 @@ import CreateProfessorDialog from "@/components/dialogs/CreateProfessorDialog";
 import { HeaderPage, HeaderPageTitle } from "@/components/HeaderPage";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Badge, Box, Container, Flex, HStack, IconButton, Table } from "@chakra-ui/react";
+import { revalidatePath } from "next/cache";
 import { BiSolidInbox, BiTrash } from "react-icons/bi";
 import { API_URL } from "@/utils";
 import { useEffect, useState } from "react";
@@ -11,18 +12,18 @@ import { useEffect, useState } from "react";
 
 export default function ProfessoresPage() {
 
-    
-    const [professores, setProfessores] = useState([{id:'', name:'', subjects:[]}])
-    const [close, setClose] = useState(true)   
 
-    useEffect(()=>{
-        fetchProfessores().then((data)=>{
+    const [professores, setProfessores] = useState([{ id: '', name: '', subjects: [] }])
+    const [close, setClose] = useState(true)
+
+    useEffect(() => {
+        fetchProfessores().then((data) => {
             setProfessores(data)
         });
-    },[close]);
+    }, [close]);
 
     async function fetchProfessores() {
-        const res = await fetch(API_URL + '/teachers', {mode:'cors'})       
+        const res = await fetch(API_URL + '/teachers', { mode: 'cors' })
 
         if (res.ok) {
             const { teachers } = await res.json()
@@ -39,7 +40,7 @@ export default function ProfessoresPage() {
             </HeaderPage>
             <Container>
                 <Flex mb={4}>
-                    <CreateProfessorDialog onClose={() => setClose(false)}/>
+                    <CreateProfessorDialog onClose={() => setClose(false)} />
                 </Flex>
                 <Box p={4} rounded="md" border="sm" borderColor="gray.200" background="white">
                     {professores.length === 0

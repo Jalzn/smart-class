@@ -30,7 +30,7 @@ export default function Sidebar() {
                     <Text color="cyan.800" fontWeight="bold">Inicio</Text>
                 </Link>
             </Button>
-            <Button asChild variant={getVariant('/minhas-salas')} w="full" colorPalette={getPallete('/minhas-salas')}>
+            <Button asChild variant={getVariant('/minhas-salas')} w="full"  colorPalette={getPallete('/minhas-salas')}>
                 <Link href="/minhas-salas">
                     <Text color="cyan.800" fontWeight="bold">Minhas Salas</Text>
                 </Link>

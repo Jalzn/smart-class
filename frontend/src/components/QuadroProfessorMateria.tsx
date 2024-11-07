@@ -1,5 +1,6 @@
 import { Box, Grid, GridItem, Heading, HStack, Text } from "@chakra-ui/react"
 import AlocarProfessorDialog from "./dialogs/AlocarProfessorDialong"
+import { API_URL } from "@/utils"
 
 type ProfessorMateria = [
     {
@@ -22,7 +23,7 @@ export default async function ({ quadroProfessorMateria }: { quadroProfessorMate
     const professores = await fetchProfessor()
 
     async function fetchProfessor() {
-        const res = await fetch('http://localhost:3333/teachers')
+        const res = await fetch( API_URL + '/teachers')
 
         if (res.ok) {
             const { teachers } = await res.json()
@@ -34,7 +35,7 @@ export default async function ({ quadroProfessorMateria }: { quadroProfessorMate
 
     return (
         <>
-            <Heading mb={4}>Quadro de Materias</Heading>
+            <Heading mb={4} color={'cyan.600'}>Quadro de Materias</Heading>
             <Box bg="white" border="sm" borderColor="gray.200" p={4}>
                 {quadroProfessorMateria.length === 0
                     ? (

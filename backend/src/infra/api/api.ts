@@ -108,6 +108,10 @@ export class API {
 
         const router = express.Router()
 
+        router.post('/generate-horarios', (req, res, next) =>
+            classroomController.generateHorarios(req, res, next)
+        )
+
         router.get('/', (req, res, next) =>
             classroomController.findAll(req, res, next)
         )
@@ -123,6 +127,11 @@ export class API {
         router.post('/:classroomId/assign-teacher', (req, res, next) =>
             classroomController.assignTeacherSubject(req, res, next)
         )
+
+        router.delete('/:classroomId', (req, res, next) =>
+            classroomController.delete(req, res, next)
+        )
+
 
         this.http.use('/classrooms', router)
     }

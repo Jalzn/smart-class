@@ -1,6 +1,6 @@
 "use client"
 
-import Logo from '@/assets/logo.png'
+import Logo from '@/assets/light-logo.svg'
 import RegisterForm from '@/components/forms/RegisterForm';
 import { Button } from "@/components/ui/button";
 import { Center, Flex, Text, VStack } from "@chakra-ui/react";
@@ -19,14 +19,13 @@ export default function RegisterPage() {
     return (
         <Center w="vw" h="vh" flexDirection="column" gap={8}>
             <Flex justifyContent="center" mb={4}>
-                <Image alt="Logo" src={Logo} width={42} height={42} />
-                <Text ms={2} fontSize="3xl" color="gray.600">SmartClass</Text>
+                <Image alt="Logo" src={Logo} width={280} height={42} />                
             </Flex>
             {!registerType && (
                 <VStack spaceY={4} w={80} align="stretch">
-                    <Button colorPalette="teal" onClick={() => setRegisterType("principal")}>Sou Diretor</Button>
-                    <Button colorPalette="teal" onClick={() => setRegisterType("teacher")}>Sou Professor</Button>
-                    <Button colorPalette="teal" onClick={() => setRegisterType("student")}>Sou Aluno</Button>
+                    <Button colorPalette="cyan" onClick={() => setRegisterType("principal")}>Sou Diretor</Button>
+                    <Button colorPalette="cyan" onClick={() => setRegisterType("teacher")}>Sou Professor</Button>
+                    <Button colorPalette="cyan" onClick={() => setRegisterType("student")}>Sou Aluno</Button>
                 </VStack>
             )}
             {registerType === "principal" && (
@@ -39,7 +38,7 @@ export default function RegisterPage() {
                 <Text>Not supported</Text>
             )}
             <Link href="/auth/login">
-                <Text fontSize="sm" color="gray.500">
+                <Text fontSize={16} color="gray.500">
                     Já sou membro
                 </Text>
             </Link>
