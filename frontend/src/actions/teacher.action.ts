@@ -2,9 +2,10 @@
 
 import { FormState } from "@/types";
 import { revalidatePath } from "next/cache";
+import { API_URL } from "@/utils";
 
 export async function registerTeacherAction(formState: FormState, formData: FormData): Promise<FormState> {
-    const res = await fetch("http://127.0.0.1:3333/teachers", {
+    const res = await fetch(API_URL + "/teachers", {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'
@@ -35,7 +36,7 @@ export async function registerTeacherAction(formState: FormState, formData: Form
 }
 
 export async function deleteTeacherAction(teacherId: string) {
-    const res = await fetch(`http://127.0.0.1:3333/teachers/${teacherId}`, {
+    const res = await fetch(API_URL + `/teachers/${teacherId}`, {
         method: "DELETE",
     })
 

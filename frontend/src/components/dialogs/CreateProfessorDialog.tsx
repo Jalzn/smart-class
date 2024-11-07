@@ -6,7 +6,7 @@ import { Box, Heading } from "@chakra-ui/react";
 import CreateProfessorForm from "../forms/CreateProfessorForm";
 import { useState } from "react";
 
-export default function CreateProfessorDialog() {
+export default function CreateProfessorDialog({ onClose }: { onClose: () => void }) {
     const [open, setOpen] = useState(false)
 
     return (

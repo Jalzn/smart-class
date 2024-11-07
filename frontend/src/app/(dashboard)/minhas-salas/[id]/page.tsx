@@ -1,6 +1,7 @@
 import { HeaderPage, HeaderPageTitle } from "@/components/HeaderPage"
 import QuadroProfessorMateria from "@/components/QuadroProfessorMateria"
 import { Container, Heading, Text } from "@chakra-ui/react"
+import { API_URL } from "@/utils";
 
 export default async function ({ params }: { params: Promise<{ id: string }> }) {
     const id = (await params).id
@@ -8,7 +9,7 @@ export default async function ({ params }: { params: Promise<{ id: string }> }) 
     const classroom = await fetchClassroom()
 
     async function fetchClassroom() {
-        const res = await fetch(`http://127.0.0.1:3333/classrooms/${id}`)
+        const res = await fetch(API_URL + `/classrooms/${id}`)
 
         if (res.ok) {
             const { classroom } = await res.json()

@@ -14,6 +14,7 @@ import { ClassroomRepository } from '../repositories/classroom.repository'
 import { TeachersController } from './controllers/teachers.controller'
 import { StudentController } from './controllers/student.controller'
 import { StudentRepository } from '../repositories/student.repository'
+import cors from 'cors';
 
 export class API {
     private http: Express
@@ -35,7 +36,10 @@ export class API {
     }
 
     public setup() {
-        this.http.use(express.json())
+          
+        this.http.use(cors())
+
+        this.http.use(express.json())             
 
         this.registerRepositories()
         this.registerServices()
