@@ -13,13 +13,17 @@ import { FormState } from "@/types"
 
 type FormValue = {
     name: string,
-    subjectCodes: string[]
+    subjectCodes: string[],
+    email:string,
+    phone:string
 }
 
 export default function CreateProfessorForm({ onSuccess }: { onSuccess: () => void }) {
     const [value, setValue] = useState<FormValue>({
         name: "",
-        subjectCodes: []
+        subjectCodes: [],
+        email:"",
+        phone:""
     })
 
     const [subject, setSuject] = useState("")
@@ -53,6 +57,8 @@ export default function CreateProfessorForm({ onSuccess }: { onSuccess: () => vo
         const formData = new FormData()
 
         formData.set('name', value.name)
+        formData.set('email', value.email)
+        formData.set('phone', value.phone)
         formData.set('subjectCodes', JSON.stringify(value.subjectCodes))
 
         const { message, errors, status } = await registerTeacherAction(state, formData)
@@ -75,6 +81,16 @@ export default function CreateProfessorForm({ onSuccess }: { onSuccess: () => vo
                     <Avatar size="xl" />
                     <Field label="Nome">
                         <Input placeholder="Digite o nome do professor" name="name" onChange={(e) => setValue({ ...value, name: e.target.value })} />
+                    </Field>                    
+                </HStack>
+                <HStack w="full" gap={8}>
+                    <Field label="E-mail">
+                        <Input placeholder="Digite o e-mail do professor" name="email" onChange={(e) => setValue({ ...value, email: e.target.value })} />
+                    </Field>
+                </HStack>
+                <HStack w="full" gap={8}>
+                    <Field label="Telefone">
+                        <Input placeholder="Digite o telefone do professor" name="phone" onChange={(e) => setValue({ ...value, phone: e.target.value })} />
                     </Field>
                 </HStack>
                 <Flex align="start" w="full" direction="column">

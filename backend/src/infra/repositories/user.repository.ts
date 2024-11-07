@@ -2,7 +2,7 @@ import { User } from '@/domain/entities'
 import { AlreadyExistsError } from '@/domain/errors'
 import { NotFoundError } from '@/domain/errors/NotFoundError'
 import { IUserRepository } from '@/domain/repositories'
-import { Prisma, PrismaClient } from '@prisma/client'
+import { PrismaClient, Prisma } from '../../../.prisma/client'
 
 export class UserRepository implements IUserRepository {
     private client: PrismaClient

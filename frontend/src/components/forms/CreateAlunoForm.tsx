@@ -15,6 +15,8 @@ type Props = {
 
 type FormValue = {
     name: string,
+    email:string,
+    phone:string
 }
 
 export default function CreateAlunoForm({ onSuccess }: Props) {
@@ -25,7 +27,9 @@ export default function CreateAlunoForm({ onSuccess }: Props) {
     })
 
     const [value, setValue] = useState<FormValue>({
-        name: ""
+        name: "",
+        email:"",
+        phone:""
     })
 
     async function handleSubmit(e: FormEvent) {
@@ -34,6 +38,8 @@ export default function CreateAlunoForm({ onSuccess }: Props) {
         const formData = new FormData()
 
         formData.set('name', value.name)
+        formData.set('email', value.email)
+        formData.set('phone', value.phone)
 
         const res = await createAlunoAction(state, formData)
 
@@ -55,6 +61,16 @@ export default function CreateAlunoForm({ onSuccess }: Props) {
                     <Avatar size="xl" />
                     <Field label="Nome">
                         <Input placeholder="Digite o nome do aluno" onChange={(e) => setValue({ ...value, name: e.target.value })} />
+                    </Field>
+                </HStack>
+                <HStack w="full" gap={8}>                    
+                    <Field label="E-mail">
+                        <Input placeholder="Digite o e-mail do aluno" onChange={(e) => setValue({ ...value, email: e.target.value })} />
+                    </Field>
+                </HStack>
+                <HStack w="full" gap={8}>                    
+                    <Field label="Telefone">
+                        <Input placeholder="Digite o celular do aluno" onChange={(e) => setValue({ ...value, phone: e.target.value })} />
                     </Field>
                 </HStack>
                 <Button ms="auto" colorPalette="teal" type="submit">Salvar</Button>

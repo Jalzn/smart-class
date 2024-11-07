@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '../../../.prisma/client'
 import express, { Express, NextFunction, Request, Response } from 'express'
 import config from '../config'
 import { prisma } from '../database'
@@ -14,6 +14,7 @@ import { ClassroomRepository } from '../repositories/classroom.repository'
 import { TeachersController } from './controllers/teachers.controller'
 import { StudentController } from './controllers/student.controller'
 import { StudentRepository } from '../repositories/student.repository'
+import cors from 'cors';
 
 export class API {
     private http: Express
@@ -35,7 +36,10 @@ export class API {
     }
 
     public setup() {
-        this.http.use(express.json())
+          
+        this.http.use(cors())
+
+        this.http.use(express.json())             
 
         this.registerRepositories()
         this.registerServices()

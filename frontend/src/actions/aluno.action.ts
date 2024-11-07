@@ -2,9 +2,10 @@
 
 import { FormState } from "@/types";
 import { revalidatePath } from "next/cache";
+import { API_URL } from "@/utils";
 
 export async function createAlunoAction(formState: FormState, formData: FormData): Promise<FormState> {
-    const res = await fetch('http://127.0.0.1:3333/students', {
+    const res = await fetch(API_URL + '/students', {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'
@@ -31,4 +32,16 @@ export async function createAlunoAction(formState: FormState, formData: FormData
         errors: {},
         status: "OK"
     }
+}
+
+export async function deleteStudentAction(studentId: string) {
+    const res = await fetch(API_URL + `/students/${studentId}`, {
+        method: "DELETE",
+    })
+
+    if (!res.ok) {
+        throw new Error("Failed to delete student")
+    }
+
+    revalidatePath('/')
 }

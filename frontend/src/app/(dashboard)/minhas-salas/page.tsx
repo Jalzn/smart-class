@@ -7,6 +7,7 @@ import { Box, Card, Container, DialogBody, Flex, Grid, GridItem, Heading, HStack
 import { revalidatePath } from "next/cache";
 import Link from "next/link";
 import { BsFillMortarboardFill } from "react-icons/bs";
+import { API_URL } from "@/utils";
 
 export default async function MinhasSalasPage() {
     revalidatePath('/')
@@ -14,7 +15,7 @@ export default async function MinhasSalasPage() {
     const classrooms: any[] = await fetchMinhasSalas()
 
     async function fetchMinhasSalas() {
-        const res = await fetch('http://localhost:3333/classrooms')
+        const res = await fetch(API_URL + '/classrooms')
 
         if (res.ok) {
             const { classrooms } = await res.json()

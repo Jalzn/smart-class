@@ -2,9 +2,10 @@
 
 import { FormState } from "@/types";
 import { revalidatePath } from "next/cache";
+import { API_URL } from "@/utils";
 
 export async function createClassroomAction(state: FormState, formData: FormData): Promise<FormState> {
-    const res = await fetch("http://localhost:3333/classrooms", {
+    const res = await fetch(API_URL + "/classrooms", {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'

@@ -6,7 +6,7 @@ import { Box, Heading } from "@chakra-ui/react";
 import { useState } from "react";
 import CreateAlunoForm from "../forms/CreateAlunoForm";
 
-export default function CreateAlunoDialog() {
+export default function CreateAlunoDialog({ onClose }: { onClose: () => void }) {
     const [open, setOpen] = useState(false)
 
     return (
@@ -19,7 +19,7 @@ export default function CreateAlunoDialog() {
                 <DialogBody>
                     <Box p={2}>
                         <Heading mb={4}>Novo Aluno</Heading>
-                        <CreateAlunoForm onSuccess={() => setOpen(false)} />
+                        <CreateAlunoForm onSuccess={() => {setOpen(false); onClose()}} />
                     </Box>
                 </DialogBody>
             </DialogContent>

@@ -1,6 +1,6 @@
 import { Student } from '@/domain/entities';
 import { IStudentRepository } from "@/domain/repositories"
-import { PrismaClient } from "@prisma/client"
+import { PrismaClient} from '../../../.prisma/client'
 
 
 

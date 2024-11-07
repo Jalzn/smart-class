@@ -1,8 +1,13 @@
 import DeleteSalaDialog from "@/components/dialogs/DeleteSalaDialog"
 import { HeaderPage, HeaderPageTitle } from "@/components/HeaderPage"
 import QuadroProfessorMateria from "@/components/QuadroProfessorMateria"
+<<<<<<< HEAD
 import { Box, Center, Container, Flex, Grid, GridItem, Heading, Text, VStack } from "@chakra-ui/react"
 import { revalidatePath } from "next/cache"
+=======
+import { Container, Heading, Text } from "@chakra-ui/react"
+import { API_URL } from "@/utils";
+>>>>>>> a51aa73a63fa895da4989e131cfeecc234a28103
 
 export default async function ({ params }: { params: Promise<{ id: string }> }) {
     revalidatePath('/')
@@ -13,7 +18,7 @@ export default async function ({ params }: { params: Promise<{ id: string }> }) 
     const horarios: any[] = classroom.horarios
 
     async function fetchClassroom() {
-        const res = await fetch(`http://127.0.0.1:3333/classrooms/${id}`)
+        const res = await fetch(API_URL + `/classrooms/${id}`)
 
         if (res.ok) {
             const { classroom } = await res.json()
