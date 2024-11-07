@@ -1,9 +1,10 @@
-import { Student } from '@/domain/entities';
-import { IStudentRepository } from "@/domain/repositories"
+
 import { PrismaClient } from "@prisma/client"
+import { Principal } from '@/domain/entities';
+import { IPrincipalRepository } from "@/domain/repositories"
 
 
-export class StudentRepository implements IStudentRepository {
+export class PrincipalRepository implements IPrincipalRepository {
     private client: PrismaClient
 
     constructor(client: PrismaClient) {
@@ -12,11 +13,11 @@ export class StudentRepository implements IStudentRepository {
 
 
     async findById(id: string) {
-        const student = await this.client.student.findFirstOrThrow({ 
+        const Principal = await this.client.principal.findFirstOrThrow({ 
             where: { id },
         })
 
-        return student
+        return Principal
     }
     
     async update() {
@@ -25,18 +26,18 @@ export class StudentRepository implements IStudentRepository {
 
     async deleteById(id: string) {
 
-        await this.client.student.delete({
+        await this.client.principal.delete({
             where: { id },
         })
     }
 
 
 
-    async create(student: Student) {
-        await this.client.student.create({
+    async create(Principal: Principal) {
+        await this.client.principal.create({
             data: {
-                id: student.id,
-                name: student.name,
+                id: Principal.id,
+                name: Principal.name,
                 createdAt: new Date(),
                 updatedAt: new Date()
 

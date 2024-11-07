@@ -1,21 +1,28 @@
 
-import School from './School';
 
-export default class Principal {
+type IPrincipalProps = {
+    id: string
+    name: string
+}
+export default class Principal{
 
-    private school: School[]
+    public id: string
+    public name: string
 
-    constructor() {
-        this.school = []
+    private constructor({ id, name }: IPrincipalProps) {
+        this.id = id
+        this.name = name
     }
 
-    
-/*
-    registerSchool(classroom: Classroom) {
-        if (this.school.find((s) => school.id === s.id)) {
-            throw new ValidationError('Classroom already exists in school.')
-        }
+    public static create(name: string) {
+        return new Principal({
+            id: crypto.randomUUID().toString(),
+            name
+        })
+    }
 
-        this.school.push(classroom)
-    }*/
+    public static with(props: IPrincipalProps) {
+        return new Principal(props)
+    }
+
 }

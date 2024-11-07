@@ -76,11 +76,10 @@ model Subject {
 }
 
  model Principal {
-  id        Int       @id @default(autoincrement())
-  name      String
-  email     String    @unique
-  password  String 
+  id        String       @id 
+  name      String 
   school    School?   @relation(fields: [schoolid], references: [id])
   schoolid  String?   @unique
-  schoolId  Int?    
+  createdAt DateTime
+  updatedAt DateTime  @updatedAt
 }
