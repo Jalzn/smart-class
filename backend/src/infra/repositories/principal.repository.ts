@@ -13,11 +13,11 @@ export class PrincipalRepository implements IPrincipalRepository {
 
 
     async findById(id: string) {
-        const Principal = await this.client.principal.findFirstOrThrow({ 
+        const principal = await this.client.principal.findFirstOrThrow({ 
             where: { id },
         })
 
-        return Principal
+        return principal
     }
     
     async update() {
@@ -40,7 +40,6 @@ export class PrincipalRepository implements IPrincipalRepository {
                 name: Principal.name,
                 createdAt: new Date(),
                 updatedAt: new Date()
-
             }
         })
     };

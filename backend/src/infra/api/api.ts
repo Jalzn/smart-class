@@ -16,6 +16,8 @@ import { SchoolController } from './controllers/school.controller'
 import { SchoolRepository } from '../repositories/school.repository'
 import { StudentController } from './controllers/student.controller'
 import { StudentRepository } from '../repositories/student.repository'
+import { PrincipalController } from './controllers/principal.controller'
+import { PrincipalRepository } from '../repositories/principal.repository'
 
 export class API {
     private http: Express
@@ -48,6 +50,7 @@ export class API {
         this.registerTeacherController()
         this.registerSchoolController()
         this.registerStudentController()
+        this.registerPrincipalController()
         this.setupErrorHandler()
     }
 
@@ -65,6 +68,7 @@ export class API {
         this.repositories['ClassroomRepository'] = new ClassroomRepository(this.database)
         this.repositories['SchoolRepository'] = new SchoolRepository(this.database)
         this.repositories['StudentRepository'] = new StudentRepository(this.database)
+        this.repositories['PrincipalRepository'] = new PrincipalRepository(this.database)
     }
 
     private registerServices() {
@@ -187,6 +191,27 @@ export class API {
         this.http.use('/student', router)
     }
 
+    private registerPrincipalController() {
+        const principalController = new PrincipalController(
+            this.repositories['PrincipalRepository']
+        )
+
+        const router = express.Router()
+
+        router.get('/:id', (req, res, next) =>
+            principalController.findById(req, res, next)
+        )
+
+        router.post('/', (req, res, next) =>
+            principalController.create(req, res, next)
+        )
+
+        router.delete('/:id', (req, res, next) =>
+            principalController.deletePrincipal(req, res, next)
+        )
+
+        this.http.use('/principal', router)
+    }
 
     private setupErrorHandler() {
         this.http.use(
