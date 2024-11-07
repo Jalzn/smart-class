@@ -57,3 +57,11 @@ model ClassroomQuadroTeacherMateria {
   teacherId   String?
   subjectCode String
 }
+
+model ClassroomHorario {
+  id          Int    @id @default(autoincrement())
+  classroomId String
+  subjectCode String
+  dayInWeek   Int
+  hour        Int
+}

@@ -3,6 +3,7 @@ type IStudentProps = {
     name: string
 }
 
+
 export default class Student {
     public id: string
     public name: string

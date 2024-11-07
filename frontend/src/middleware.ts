@@ -15,7 +15,11 @@ export function middleware(request: NextRequest) {
     }
 
     if (token && request.nextUrl.pathname.startsWith('/auth')) {
-        return NextResponse.redirect(new URL('/', request.url))
+        return NextResponse.redirect(new URL('/home', request.url))
+    }
+
+    if (request.nextUrl.pathname === "/") {
+        return NextResponse.redirect(new URL('/home', request.url))
     }
 
     return NextResponse.next()

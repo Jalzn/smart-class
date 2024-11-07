@@ -3,6 +3,7 @@
 import jwt from 'jsonwebtoken'
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
+import { API_URL } from "@/utils";
 
 export type LoginFormState = {
     message: string
@@ -15,7 +16,7 @@ export type RegisterFormState = {
 }
 
 export async function loginAction(state: LoginFormState, formData: FormData): Promise<LoginFormState> {
-    const res = await fetch('http://localhost:3333/auth/login', {
+    const res = await fetch(API_URL + '/auth/login', {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'
@@ -50,7 +51,7 @@ export async function loginAction(state: LoginFormState, formData: FormData): Pr
 }
 
 export async function registerAction(state: RegisterFormState, formData: FormData): Promise<RegisterFormState> {
-    const res = await fetch('http://localhost:3333/auth/register', {
+    const res = await fetch('http://localhost:3334/auth/register', {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'

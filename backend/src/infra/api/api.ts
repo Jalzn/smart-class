@@ -1,4 +1,5 @@
-import { PrismaClient } from '@prisma/client'
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { PrismaClient } from '../../../.prisma/client'
 import express, { Express, NextFunction, Request, Response } from 'express'
 import config from '../config'
 import { prisma } from '../database'
@@ -11,6 +12,9 @@ import { AuthMiddleware } from './middlewares/auth.middleware'
 import ClassroomController from './controllers/classroom.controller'
 import { ClassroomRepository } from '../repositories/classroom.repository'
 import { TeachersController } from './controllers/teachers.controller'
+import { StudentController } from './controllers/student.controller'
+import { StudentRepository } from '../repositories/student.repository'
+import cors from 'cors';
 
 export class API {
     private http: Express
@@ -32,7 +36,10 @@ export class API {
     }
 
     public setup() {
-        this.http.use(express.json())
+          
+        this.http.use(cors())
+
+        this.http.use(express.json())             
 
         this.registerRepositories()
         this.registerServices()
@@ -41,6 +48,7 @@ export class API {
         this.registerAuthController()
         this.registerClassroomController()
         this.registerTeacherController()
+        this.registerStudentController()
 
         this.setupErrorHandler()
     }
@@ -57,6 +65,7 @@ export class API {
             this.database
         )
         this.repositories['ClassroomRepository'] = new ClassroomRepository(this.database)
+        this.repositories['StudentRepository'] = new StudentRepository(this.database)
     }
 
     private registerServices() {
@@ -99,6 +108,10 @@ export class API {
 
         const router = express.Router()
 
+        router.post('/generate-horarios', (req, res, next) =>
+            classroomController.generateHorarios(req, res, next)
+        )
+
         router.get('/', (req, res, next) =>
             classroomController.findAll(req, res, next)
         )
@@ -114,6 +127,11 @@ export class API {
         router.post('/:classroomId/assign-teacher', (req, res, next) =>
             classroomController.assignTeacherSubject(req, res, next)
         )
+
+        router.delete('/:classroomId', (req, res, next) =>
+            classroomController.delete(req, res, next)
+        )
+
 
         this.http.use('/classrooms', router)
     }
@@ -138,6 +156,24 @@ export class API {
         )
 
         this.http.use('/teachers', router)
+    }
+
+    private registerStudentController() {
+        const studentController = new StudentController(
+            this.repositories['StudentRepository']
+        )
+
+        const router = express.Router()
+
+        router.get('/', (req, res, next) =>
+            studentController.findAll(req, res, next)
+        )
+
+        router.post('/', (req, res, next) =>
+            studentController.create(req, res, next)
+        )
+
+        this.http.use('/students', router)
     }
 
 

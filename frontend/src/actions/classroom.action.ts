@@ -2,9 +2,10 @@
 
 import { FormState } from "@/types";
 import { revalidatePath } from "next/cache";
+import { API_URL } from "@/utils";
 
 export async function createClassroomAction(state: FormState, formData: FormData): Promise<FormState> {
-    const res = await fetch("http://localhost:3333/classrooms", {
+    const res = await fetch(API_URL + "/classrooms", {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'
@@ -65,4 +66,40 @@ export async function alocarProfessorMateriaAction(state: FormState, formData: F
         errors: {},
         status: "OK"
     }
+}
+
+export async function deleteClassroom(classroomId: string): Promise<FormState> {
+    const res = await fetch(`http://localhost:3333/classrooms/${classroomId}`, {
+        method: "DELETE"
+    })
+
+    if (!res.ok) {
+        const { message } = await res.json()
+
+        return {
+            message,
+            errors: {},
+            status: "FAILED"
+        }
+    }
+
+    revalidatePath('/')
+
+    return {
+        message: "",
+        errors: {},
+        status: "OK"
+    }
+}
+
+export async function generateHorarios() {
+    const res = await fetch('http://localhost:3333/classrooms/generate-horarios', {
+        method: "POST"
+    })
+
+    if (!res.ok) {
+        throw new Error("Failed to generate horarios")
+    }
+
+    revalidatePath('/')
 }

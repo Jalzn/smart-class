@@ -21,7 +21,7 @@ export default function Navbar() {
     const user = getUserFromCookies()
 
     return (
-        <Flex shadow="md" p={4} h={16} alignItems="center" background="cyan.800" color="white">
+        <Flex position="fixed" top={0} w="full" zIndex={20} shadow="md" p={4} h={16} alignItems="center" background="cyan.800" color="white">
             <Flex gap={2}>
                 <Image alt='Logo' src={Logo} width={32} height={32} />
                 <Text fontSize="xl">SmartClass</Text>

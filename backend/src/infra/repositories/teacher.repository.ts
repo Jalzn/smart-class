@@ -2,7 +2,7 @@ import { Subject, Teacher } from '@/domain/entities'
 import { NotFoundError } from '@/domain/errors'
 import { ITeacherRepository } from '@/domain/repositories'
 import { SubjectCode } from '@/domain/types'
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '../../../.prisma/client'
 
 export class TeacherRepository implements ITeacherRepository {
     private client: PrismaClient

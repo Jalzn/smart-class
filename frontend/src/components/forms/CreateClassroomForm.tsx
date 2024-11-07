@@ -8,14 +8,19 @@ import { createClassroomAction } from "@/actions/classroom.action";
 import { useFormState } from "react-dom";
 import { Alert } from "../ui/alert";
 import { FormEvent, useState } from "react";
+import { FormState } from "@/types";
 
-export default function CreateClassroomForm() {
+type Props = {
+    onSuccess: () => void
+}
+
+export default function CreateClassroomForm({ onSuccess }: Props) {
     const [value, setValue] = useState<{ name: string, grade: string }>({
         name: "",
         grade: ""
     })
 
-    const [state, action] = useFormState(createClassroomAction, {
+    const [state, setState] = useState<FormState>({
         message: "",
         errors: {},
         status: "PENDING"
@@ -37,7 +42,15 @@ export default function CreateClassroomForm() {
         formData.set('name', value.name)
         formData.set('grade', value.grade)
 
-        await action(formData)
+        const res = await createClassroomAction(state, formData)
+
+        if (res.status === "OK") {
+            setState(res)
+            onSuccess()
+            return
+        }
+
+        setState(res)
     }
 
     return (
